@@ -6,7 +6,7 @@ import { MdEmail } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-
+import "../components/css/selectionRecolor.css"
 const AuthForm = () => {
   const [isRegister, setIsRegister] = useState(true);
   const [formData, setFormData] = useState({
@@ -62,21 +62,21 @@ const AuthForm = () => {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-700">
-        <div className="w-full max-w-md p-5 space-y-6 bg-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-center text-gray-800">
+      <div className="flex items-center justify-center min-h-screen bg-background bg-[url('/img/background.jpg')] bg-cover bg-center">
+        <div className="w-full max-w-md p-5 space-y-6 bg-foreground rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-center text-background">
             {isRegister ? "Register" : "Login"}
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 grid">
             {isRegister && (
               <div className="relative">
-                <FaUser className="absolute left-3 top-3 text-gray-500" />
+                <FaUser className="absolute left-3 top-3 text-background" />
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none selected text-background bg-foreground border-background"
                   placeholder="Enter your name"
                 />
                 {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
@@ -84,31 +84,31 @@ const AuthForm = () => {
             )}
 
             <div className="relative">
-              <MdEmail className="absolute left-3 top-3 text-gray-500" />
+              <MdEmail className="absolute left-3 top-3 text-background" />
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border rounded-lg bg-foreground border-background  "
                 placeholder="Enter your email"
               />
-              {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+              {errors.email && <p className="text-sm text-red-500 ">{errors.email}</p>}
             </div>
 
             <div className="relative">
-              <FaLock className="absolute left-3 top-3 text-gray-500" />
+              <FaLock className="absolute left-3 top-3 text-background" />
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                className="w-full pl-10 pr-10 py-2 border rounded-lg bg-foreground border-background "
                 placeholder="Enter your password"
               />
               <button
                 type="button"
-                className="absolute right-3 top-3 text-gray-500"
+                className="absolute right-3 top-3 text-foreground"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
@@ -118,13 +118,13 @@ const AuthForm = () => {
 
             {isRegister && (
               <div className="relative">
-                <FaLock className="absolute left-3 top-3 text-gray-500" />
+                <FaLock className="absolute left-3 top-3 text-background" />
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                  className="w-full pl-10 pr-10 py-2  rounded-lg bg-foreground border border-background "
                   placeholder="Confirm your password"
                 />
                 <button
@@ -140,20 +140,22 @@ const AuthForm = () => {
 
             <button
               type="submit"
-              className="w-full py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none"
+              className="px-12 font-semibold justify-self-center py-2 text-background hover:text-background bg-foreground border hover:border-white  rounded-lg hover:bg-foreground focus:outline-none"
             >
               {isRegister ? "Register" : "Login"}
             </button>
           </form>
 
           <div className="text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-background">
               {isRegister ? "Already have an account?" : "Don't have an account?"} {" "}
               <button
                 onClick={() => setIsRegister(!isRegister)}
-                className="text-blue-500 hover:underline focus:outline-none"
-              >
+                className="text-white hover:underline focus:outline-none "
+              ><strong>
+
                 {isRegister ? "Login" : "Register"}
+              </strong>
               </button>
             </p>
           </div>

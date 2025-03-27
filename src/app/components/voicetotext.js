@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
-
+import "./css/responsive.css"
 const VoiceToText = () => {
   const [text, setText] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -75,20 +75,26 @@ const VoiceToText = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-700  text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background -mt-4  text-background custom-margin-bottom">
       {/* Tool Heading */}
-      <h2 className="text-3xl font-bold text-white mb-4">🎙️ Voice-to-Text Converter</h2>
+      <div className='w-3/5 text-center xs:mt-28 md:mt-28 lg:mt-0 custom-margin-top'>
+
+      <h2 className="text-3xl font-bold text-foreground mb-4">🎙️ Voice-to-Text Converter</h2>
+      <p className='text-foreground text-lg mb-10 font-medium'>
+      A voice-to-text converter is a tool that transcribes spoken words into written text using speech recognition technology. It captures audio input, processes it through advanced algorithms, and generates accurate text output. 
+      </p>
+      </div>
 
       {/* Voice Input Section */}
-      <div className="w-full max-w-6xl  bg-white  border-2 border-dashed border-gray-300 p-6 rounded-lg shadow-lg">
-        <label className="block text-gray-500 text-lg mb-2">
+      <div className="w-full max-w-5xl  bg-foreground border-gray-300 p-6 rounded-lg shadow-lg">
+        <label className="block text-background text-lg mb-2">
           Speak into your microphone or upload an audio file:
         </label>
 
         {/* Show textarea only if text exists */}
         {text && (
           <textarea
-            className="w-full h-40 p-4 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full h-32 p-4 rounded-lg bg-foreground text-white border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="Your spoken words or transcribed text will appear here..."
             value={text}
             readOnly
@@ -101,7 +107,7 @@ const VoiceToText = () => {
           {!isListening ? (
             <button
               onClick={handleStartListening}
-              className="bg-green-600 hover:bg-green-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300"
+              className="bg-background hover:bg-foreground text-foreground hover:text-background font-bold py-3 px-6 border-2 border-solid rounded-lg transition-all duration-300"
             >
               🎤 Start Speaking
             </button>
@@ -121,11 +127,11 @@ const VoiceToText = () => {
             type="file"
             accept="audio/*"
             onChange={handleFileChange}
-            className="block w-full text-white bg-gray-600 border-2 border-dashed border-gray-600 p-2 rounded-lg"
+            className="block w-full text-foreground bg-white border-2 rounded-lg"
           />
           <button
             onClick={handleConvertFile}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg mt-4 transition-all duration-300"
+            className="bg-background hover:bg-foreground text-foreground hover:text-background border-2 border-background font-bold py-2 px-4 rounded-lg mt-4 transition-all duration-300"
           >
             🔄 Convert Audio File to Text
           </button>

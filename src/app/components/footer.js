@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-7">
+    <footer className="bg-foreground text-background py-7">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo & Description */}
@@ -10,7 +10,7 @@ const Footer = () => {
             <Link href="/" className="flex items-center space-x-3">
               <img src="/img/logo.png" className="h-20 w-20 rounded-full shadow-lg" alt="Logo" />
             </Link>
-            <p className="mt-6 text-gray-400 leading-relaxed">
+            <p className="mt-6 text-background leading-relaxed">
               Convert, extract, and process media files quickly with our easy-to-use tools.
               Get high-quality results for MP4, MP3, WAV, and more.
             </p>
@@ -40,7 +40,7 @@ const Footer = () => {
                 { name: "Instagram", icon: "fa-instagram", link: "#" },
                 { name: "Facebook", icon: "fa-facebook", link: "#" }
               ].map((social, index) => (
-                <Link key={index} href={social.link} className="text-gray-400 hover:text-indigo-400 transition duration-300 text-2xl">
+                <Link key={index} href={social.link} className="text-background hover:text-indigo-400 transition duration-300 text-2xl">
                   <i className={`fa-brands ${social.icon}`}></i>
                 </Link>
               ))}
@@ -50,7 +50,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="mt-6 border-t border-gray-700 pt-6 text-center">
-          <p className="text-gray-500">© {new Date().getFullYear()} YourCompany. All rights reserved.</p>
+          <p className="text-background">© {new Date().getFullYear()} YourCompany. All rights reserved.</p>
         </div>
       </div>
     </footer>

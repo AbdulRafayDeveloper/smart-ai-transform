@@ -7,13 +7,13 @@ import FlareIcon from '@mui/icons-material/Flare';
 
 
 
-
+const commanPath = "/img/svg/"
 
 // Cards data for Text to Video (SmartVidz)
 const CardDataVideo = [
   {
     id: 1,
-    image: "https://cdn-icons-png.flaticon.com/512/4843/4843094.png",
+    image: "/img/svg/text-style-format-svgrepo-com.svg",
     title: "Enter Text",
     content: "Provide the text or script you want to transform into a video.",
   },
@@ -25,7 +25,7 @@ const CardDataVideo = [
   },
   {
     id: 3,
-    image: "https://cdn-icons-png.flaticon.com/512/1828/1828919.png",
+    image: "/img/svg/plus-cross-svgrepo-com.svg",
     title: "Generate Video",
     content: "Click 'Generate' and let AI convert your text into an engaging video.",
   },
@@ -47,7 +47,7 @@ const CardDataAudio = [
   },
   {
     id: 2,
-    image: "https://cdn-icons-png.flaticon.com/512/3461/3461335.png",
+    image: "/img/svg/chart-pipe-svgrepo-com.svg",
     title: "Select Language & Voice",
     content: "Pick from multiple AI-generated voices and languages.",
   },
@@ -75,19 +75,19 @@ const CardDataExtraction = [
   },
   {
     id: 2,
-    image: "https://cdn-icons-png.flaticon.com/512/2910/2910766.png",
+    image: "/img/svg/clipboard-svgrepo-com.svg",
     title: "AI Scanning",
     content: "Our AI scans the image and detects the text with high accuracy.",
   },
   {
     id: 3,
-    image: "https://cdn-icons-png.flaticon.com/512/1828/1828970.png",
+    image: "/img/svg/star-svgrepo-com.svg",
     title: "Extract & Preview",
     content: "View the extracted text and make necessary edits.",
   },
   {
     id: 4,
-    image: "https://cdn-icons-png.flaticon.com/512/1828/1828919.png",
+    image: "/img/svg/plus-cross-svgrepo-com.svg",
     title: "Copy or Download",
     content: "Copy the extracted text or download it as a document.",
   },
@@ -108,7 +108,7 @@ const CardDataVoiceToText = [
   },
   {
     id: 3,
-    image: "https://cdn-icons-png.flaticon.com/512/3523/3523885.png",
+    image: "/img/svg/shopping-svgrepo-com.svg",
     title: "Text Preview & Editing",
     content: "View and edit the transcribed text as needed.",
   },
@@ -128,7 +128,7 @@ const FeaturedCardData = [
     id: "01",
     type: "Video",
     labelColor: "#4F46E5", // Indigo (SmartTransform Theme)
-    style: { color: "#4F46E5" },
+    style: { color: "#22405c" },
     title: "AI-Powered Video Processing",
     content: "Leverage advanced AI to transform text into high-quality videos in seconds.",
   },
@@ -136,7 +136,7 @@ const FeaturedCardData = [
     id: "02",
     type: "Audio",
     labelColor: "#9333EA", // Purple (SmartTransform Theme)
-    style: { color: "#9333EA" },
+    style: { color: "#22405c" },
     title: "Crystal-Clear Audio",
     content: "Enhance and clean up audio files effortlessly with AI-powered noise reduction.",
   },
@@ -144,7 +144,7 @@ const FeaturedCardData = [
     id: "03",
     type: "Video",
     labelColor: "#2563EB", // Blue (SmartTransform Theme)
-    style: { color: "#2563EB" },
+    style: { color: "#22405c" },
     title: "Seamless Video Editing",
     content: "Cut, merge, and enhance videos without any technical skills required.",
   },
@@ -152,7 +152,7 @@ const FeaturedCardData = [
     id: "04",
     type: "Audio",
     labelColor: "#6366F1", // Soft Purple
-    style: { color: "#6366F1" },
+    style: { color: "#22405c" },
     title: "Auto-Generated Subtitles",
     content: "Convert speech to text with high accuracy and customizable captions.",
   },
@@ -160,7 +160,7 @@ const FeaturedCardData = [
     id: "05",
     type: "Video",
     labelColor: "#1E40AF", // Deep Blue
-    style: { color: "#1E40AF" },
+    style: { color: "#22405c" },
     title: "HD Video Output",
     content: "Experience 1080p+ quality rendering for all your video conversions.",
   },
@@ -183,7 +183,7 @@ const Rewritertooldata = [
   },
   {
     id: 2,
-    image: "https://cdn-icons-png.flaticon.com/512/445/445218.png", // Audio Converter Icon
+    image: "/img/svg/audio-media-multimedia-21-svgrepo-com.svg", // Audio Converter Icon
     alt: "Audio Editors",
     title: "AI-Powered Audio Optimization",
     content:
@@ -191,7 +191,7 @@ const Rewritertooldata = [
   },
   {
     id: 3,
-    image: "https://cdn-icons-png.flaticon.com/512/3662/3662314.png", // Podcast Icon
+    image: "/img/svg/headphones-svgrepo-com.svg", // Podcast Icon
     alt: "Podcasters",
     title: "Effortless Podcast Conversion",
     content:
@@ -199,7 +199,7 @@ const Rewritertooldata = [
   },
   {
     id: 4,
-    image: "https://cdn-icons-png.flaticon.com/512/3318/3318177.png", // Audio Recording Icon
+    image: "/img/svg/bulb-creative-idea-svgrepo-com.svg", // Audio Recording Icon
     alt: "Music Producers",
     title: "Smart AI for Music Production",
     content:
@@ -241,36 +241,36 @@ const FAQsData = [
     question: "Can I convert multiple files at once?",
     answer: "Yes! Our batch processing feature allows you to upload and convert multiple video or audio files simultaneously, saving time and effort."
   },
-  {
-    id: 6,
-    questionNo: "Q6:",
-    question: "Do I need to install any software to use SmartTransform?",
-    answer: "No installation is required. SmartTransform is a fully online tool, allowing you to convert files directly from your browser with no downloads needed."
-  },
-  {
-    id: 7,
-    questionNo: "Q7:",
-    question: "Are there any limitations on file size?",
-    answer: "We offer generous file size limits for free users, and premium users enjoy even larger upload capacities. Check our pricing page for details."
-  },
-  {
-    id: 8,
-    questionNo: "Q8:",
-    question: "Can I enhance or edit my audio before conversion?",
-    answer: "Yes! SmartTransform offers basic audio enhancement features such as noise reduction, volume boosting, and trimming before conversion."
-  },
-  {
-    id: 9,
-    questionNo: "Q9:",
-    question: "Does SmartTransform support cloud storage integration?",
-    answer: "Yes! You can upload files directly from Google Drive, Dropbox, or OneDrive, and download converted files back to your preferred cloud service."
-  },
-  {
-    id: 10,
-    questionNo: "Q10:",
-    question: "How long does it take to convert a file?",
-    answer: "Conversion time depends on file size and format, but most conversions are completed within seconds using our high-speed processing technology."
-  }
+  // {
+  //   id: 6,
+  //   questionNo: "Q6:",
+  //   question: "Do I need to install any software to use SmartTransform?",
+  //   answer: "No installation is required. SmartTransform is a fully online tool, allowing you to convert files directly from your browser with no downloads needed."
+  // },
+  // {
+  //   id: 7,
+  //   questionNo: "Q7:",
+  //   question: "Are there any limitations on file size?",
+  //   answer: "We offer generous file size limits for free users, and premium users enjoy even larger upload capacities. Check our pricing page for details."
+  // },
+  // {
+  //   id: 8,
+  //   questionNo: "Q8:",
+  //   question: "Can I enhance or edit my audio before conversion?",
+  //   answer: "Yes! SmartTransform offers basic audio enhancement features such as noise reduction, volume boosting, and trimming before conversion."
+  // },
+  // {
+  //   id: 9,
+  //   questionNo: "Q9:",
+  //   question: "Does SmartTransform support cloud storage integration?",
+  //   answer: "Yes! You can upload files directly from Google Drive, Dropbox, or OneDrive, and download converted files back to your preferred cloud service."
+  // },
+  // {
+  //   id: 10,
+  //   questionNo: "Q10:",
+  //   question: "How long does it take to convert a file?",
+  //   answer: "Conversion time depends on file size and format, but most conversions are completed within seconds using our high-speed processing technology."
+  // }
 ];
 
 

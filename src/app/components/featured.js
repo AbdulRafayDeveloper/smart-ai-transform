@@ -2,7 +2,7 @@ import FeaturedCards from "./featuredCards";
 
 const Featured = () => {
   return (
-    <div className="bg-gradient-to-b from-blue-500 to-purple-600 text-white py-12">
+    <div className="bg-foreground text-white py-12">
       <div className="container mx-auto px-6">
         {/* Heading Section */}
         <div className="text-center">

@@ -1,0 +1,25 @@
+
+@media (max-width: 400px) {
+    .custom-margin-top {
+      margin-top: 100px;
+    }
+    .custom-margin-bottom{
+        margin-bottom: 50px;
+    }
+  }
+
+  /* NavLogo  */
+@media (max-width: 1028px) {
+    .custom-logo-size {
+      font-size: 1.2rem;
+   
+    }
+  }
+@media (max-width: 938px) {
+   .custom-navLink-size{
+    font-size: 14px;
+   }
+  }
+
+
+  

@@ -1,3 +1,5 @@
+const { keyframes } = require('@emotion/react');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,8 +11,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#fff",
+        foreground: "#22405c",
+      },
+      screens: {
+        xs: '400px',
+        sm: '600px', 
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
       },
     },
   },

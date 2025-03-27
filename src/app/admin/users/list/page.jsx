@@ -4,6 +4,7 @@ import { FaTrash, FaEdit } from 'react-icons/fa';
 import Loading from '../../components/Loading';
 import LinkingWithSidebar from '../../components/LinkingWithSidebar';
 import Header from '../../components/Header';
+
 import PaginationComponent from '../../components/PaginationComponent';
 
 function Page() {
@@ -35,7 +36,7 @@ function Page() {
             <LinkingWithSidebar />
             <div className="flex-1 flex flex-col overflow-auto">
                 <Header />
-                <div className="flex-1 bg-gray-100 mt-12 lg:ml-64 ml-20">
+                <div className="flex-1 bg-gray-100 mt-[68px] lg:ml-64 ml-20">
                     <div className="bg-white mt-3 rounded-lg shadow-lg mr-2 mb-2">
                         <div className="p-4">
                             <div className="flex flex-col sm:flex-row justify-between items-center mb-4 px-4 sm:px-0">
@@ -51,13 +52,13 @@ function Page() {
                                     <div className="flex gap-2 w-full sm:w-auto">
                                         <button
                                             onClick={handleFilter}
-                                            className="bg-red-600 text-white px-3 py-1 hover:bg-red-800 flex-1"
+                                            className="bg-foreground text-white px-3 py-1 rounded-md flex-1"
                                         >
                                             Search
                                         </button>
                                         <button
                                             onClick={handleClear}
-                                            className="bg-red-600 text-white px-3 py-1 hover:bg-red-800 flex-1"
+                                            className="bg-foreground text-white px-3 py-1 rounded-md flex-1"
                                         >
                                             Clear
                                         </button>
@@ -65,22 +66,22 @@ function Page() {
                                 </div>
                             </div>
                             <div className="overflow-x-auto">
-                                <table className="min-w-full bg-white rounded-sm shadow-lg overflow-hidden">
+                                <table className="min-w-[500px] bg-white rounded-sm shadow-lg overflow-hidden">
                                     <thead className="font-bold">
                                         <tr>
-                                            <th className="p-2 border border-gray-300" style={{ width: "4%" }}>Sr#</th>
-                                            <th className="p-2 border border-gray-300" style={{ width: "15%" }}>Email</th>
-                                            <th className="p-2 border border-gray-300" style={{ width: "10%" }}>Date</th>
-                                            <th className="p-2 border border-gray-300" style={{ width: "10%" }}>Action</th>
+                                            <th className="py-3 p-1 border border-gray-300 w-[4%]"  style={{ width: "4%" }}>Sr#</th>
+                                            <th className="py-3 p-1 border border-gray-300 w-[15%]" style={{ width: "15%" }}>Email</th>
+                                            <th className="py-3 p-1 border border-gray-300 w-[10%]" style={{ width: "15%" }}>Date</th>
+                                            <th className="py-3 p-1 border border-gray-300 w-[10%]" style={{ width: "15%" }}>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {data.length > 0 ? (
                                             data.map((element, index) => (
                                                 <tr className="hover:bg-gray-100" key={element._id}>
-                                                    <td className="text-center border border-gray-300 text-gray-900 p-1">{index + 1}</td>
-                                                    <td className="text-center border border-gray-300 text-gray-900 p-1">{element.email}</td>
-                                                    <td className="text-center border border-gray-300 text-gray-900 p-1">
+                                                    <td className="text-center border border-gray-300 text-foreground py-3 p-1">{index + 1}</td>
+                                                    <td className="text-center border border-gray-300 text-foreground py-3 p-1">{element.email}</td>
+                                                    <td className="text-center border border-gray-300 text-foreground py-3 p-1">
                                                         {new Date(element.createdAt).toLocaleDateString('en-US', {
                                                             year: 'numeric',
                                                             month: 'long',
@@ -89,10 +90,10 @@ function Page() {
                                                     </td>
                                                     <td className="text-center border border-gray-300 p-1">
                                                         <div className="flex items-center justify-center gap-3">
-                                                            <button className="text-blue-600 hover:text-blue-800">
+                                                            <button className="text-foreground hover:text-blue-800">
                                                                 <FaEdit />
                                                             </button>
-                                                            <button className="text-red-600 hover:text-red-800">
+                                                            <button className="text-foreground hover:text-red-800">
                                                                 <FaTrash />
                                                             </button>
                                                         </div>
@@ -101,7 +102,7 @@ function Page() {
                                             ))
                                         ) : (
                                             <tr>
-                                                <td colSpan="6" className="text-center border border-gray-300 text-gray-900 p-1">
+                                                <td colSpan="6" className="text-center border border-gray-300 text-foreground p-1">
                                                     No records found
                                                 </td>
                                             </tr>

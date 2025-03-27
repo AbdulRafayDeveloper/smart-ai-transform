@@ -1,3 +1,4 @@
+// import "./cards.css"
 import {
   CardDataVideo,
   CardDataAudio,
@@ -10,7 +11,7 @@ const Card = () => {
     <>
       {/* Section 2 - SmartVidz: Text to Video */}
       <div className="p-4 mt-6">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+        <h2 className="text-2xl font-extrabold text-foreground text-center mb-6 tracking-wide">
           SmartVidz: Text to Video
         </h2>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6">
@@ -18,13 +19,13 @@ const Card = () => {
             CardDataVideo.map((el, idx) => (
               <div
                 key={idx}
-                className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
+                className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 TexttoVideo"
               >
-                <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
-                <h5 className="mt-5 text-xl font-medium text-gray-900 text-center">
+                <img src={el.image} alt="cards" className="w-16 h-16 mx-auto text-white" />
+                <h5 className="mt-5 text-2xl font-medium text-background text-center TexttoVideo_h5">
                   {el.title}
                 </h5>
-                <p className="mt-3 text-lg font-normal text-gray-600 text-center">
+                <p className="mt-3 text-lg font-normal text-background text-center TexttoVideo_p">
                   {el.content}
                 </p>
               </div>
@@ -39,28 +40,28 @@ const Card = () => {
 
       {/* Section 3 - SmartSpeak: Text to Speech */}
       <div className="p-4 mt-12">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+        <h2 className="text-2xl font-extrabold text-foreground text-center mb-6 tracking-wide ">
           SmartSpeak: Text to Speech
         </h2>
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 ">
           {CardDataAudio?.length > 0 ? (
             CardDataAudio.map((el, idx) => (
               <div
                 key={idx}
-                className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
+                className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 TexttoSpeech"
               >
                 <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
-                <h5 className="mt-5 text-xl font-medium text-gray-900 text-center">
+                <h5 className="mt-5 text-xl font-medium text-background text-center">
                   {el.title}
                 </h5>
-                <p className="mt-3 text-lg font-normal text-gray-600 text-center">
+                <p className="mt-3 text-lg font-normal text-background text-center">
                   {el.content}
                 </p>
               </div>
             ))
           ) : (
             <p className="text-center text-gray-500">
-              No audio data available.
+              No audio data avbackground
             </p>
           )}
         </div>
@@ -68,7 +69,7 @@ const Card = () => {
 
       {/* Section 4 - SmartScan: Image to Text Extraction */}
       <div className="p-4 mt-12">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+        <h2 className="text-2xl font-extrabold text-foreground text-center mb-6 tracking-wide">
           SmartScan: Image to Text
         </h2>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6">
@@ -76,13 +77,13 @@ const Card = () => {
             CardDataExtraction.map((el, idx) => (
               <div
                 key={idx}
-                className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
+                className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 ImagetoText"
               >
                 <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
-                <h5 className="mt-5 text-xl font-medium text-gray-900 text-center">
+                <h5 className="mt-5 text-xl font-medium text-background text-center">
                   {el.title}
                 </h5>
-                <p className="mt-3 text-lg font-normal text-gray-600 text-center">
+                <p className="mt-3 text-lg font-normal text-background text-center">
                   {el.content}
                 </p>
               </div>
@@ -96,8 +97,8 @@ const Card = () => {
       </div>
 
       {/* Section 4 - voicetotext: Image to Text Extraction */}
-      <div className="p-4 mt-12">
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
+      <div className="p-4 mt-12 flex flex-col items-center">
+        <h2 className="text-2xl font-extrabold text-foreground text-center mb-6 tracking-wide">
           SmartVoice: Voice to Text
         </h2>
         <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6">
@@ -105,13 +106,13 @@ const Card = () => {
             CardDataVoiceToText.map((el, idx) => (
               <div
                 key={idx}
-                className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
+                className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 VoicetoText"
               >
                 <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
-                <h5 className="mt-5 text-xl font-medium text-gray-900 text-center">
+                <h5 className="mt-5 text-xl font-medium text-background text-center">
                   {el.title}
                 </h5>
-                <p className="mt-3 text-lg font-normal text-gray-600 text-center">
+                <p className="mt-3 text-lg font-normal text-background text-center">
                   {el.content}
                 </p>
               </div>

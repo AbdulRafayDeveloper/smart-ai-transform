@@ -9,9 +9,9 @@ function LinkingWithSidebar() {
                 speechmaker="../../admin/speechmaker"
                 videorevoice="../../admin/videorevoice"
                 users="../../admin/users/list"
-            ></Sidebar>
-        </div >
+            />
+        </div>
     )
 }
 
-export default LinkingWithSidebar
+export default LinkingWithSidebar;

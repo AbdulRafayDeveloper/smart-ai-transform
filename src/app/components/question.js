@@ -13,7 +13,7 @@ const Questions = () => {
         <div className="container mx-auto px-4 py-12 ">
             {/* Heading Section */}
             <div className="text-center mb-10">
-                <h1 className="text-4xl font-bold text-gray-800">Frequently Asked Questions</h1>
+                <h1 className="text-4xl font-bold text-foreground">Frequently Asked Questions</h1>
                 <p className="text-lg text-gray-600 mt-2">
                     Get answers to common questions about our video & audio transformation services.
                 </p>
@@ -25,14 +25,14 @@ const Questions = () => {
                     <div 
                         key={index} 
                         className={`border-b border-gray-300 overflow-hidden ${
-                            openIndex === index ? "border-2 border-indigo-600 rounded-md" : ""
+                            openIndex === index ? "border-2 border-foreground rounded-md" : ""
                         }`}
                     >
                         {/* Question Section */}
                         <button 
                             onClick={() => toggleAccordion(index)} 
-                            className={`flex justify-between items-center w-full text-left p-4 text-lg font-semibold bg-gray-100 hover:bg-indigo-600 hover:text-white transition-all duration-300 rounded-md ${
-                                openIndex === index ? "bg-indigo-600 text-white" : ""
+                            className={`flex justify-between items-center w-full text-left p-4 text-lg font-semibold bg-foreground  text-background  transition-all duration-300 rounded-md ${
+                                openIndex === index ? "bg-foreground text-white" : ""
                             }`}
                         >
                             <span>{item.question}</span>
@@ -45,7 +45,7 @@ const Questions = () => {
 
                         {/* Answer Section */}
                         <div 
-                            className={`p-4 text-gray-700 transition-all duration-300 ${
+                            className={`p-4 text-foreground transition-all duration-300 ${
                                 openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                             } overflow-hidden`}
                         >
