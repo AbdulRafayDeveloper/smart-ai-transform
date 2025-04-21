@@ -6,7 +6,8 @@ import { MdEmail } from "react-icons/md";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import "../components/css/selectionRecolor.css"
+import "../components/css/selectionRecolor.css";
+
 const AuthForm = () => {
   const [isRegister, setIsRegister] = useState(true);
   const [formData, setFormData] = useState({
@@ -63,7 +64,7 @@ const AuthForm = () => {
     <>
       <Navbar />
       <div className="flex items-center justify-center min-h-screen bg-background bg-[url('/img/background.jpg')] bg-cover bg-center">
-        <div className="w-full max-w-md p-5 space-y-6 bg-foreground rounded-lg shadow-lg">
+        <div className="w-full max-w-md p-5 space-y-6 bg-foreground rounded-lg shadow-lg sm:w-11/12 md:w-3/4 lg:w-1/2 xl:w-1/3 mt-28 mb-12 sm:mt-10 sm:mb-10 m-10 sm:mt-36 md:28 lg:36 xl:28 2xl:28 custom-margin-top-AuthForm">
           <h2 className="text-2xl font-bold text-center text-background">
             {isRegister ? "Register" : "Login"}
           </h2>
@@ -90,7 +91,7 @@ const AuthForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full pl-10 pr-4 py-2 border rounded-lg bg-foreground border-background  "
+                className="w-full pl-10 pr-4 py-2 border rounded-lg bg-foreground border-background"
                 placeholder="Enter your email"
               />
               {errors.email && <p className="text-sm text-red-500 ">{errors.email}</p>}
@@ -103,7 +104,7 @@ const AuthForm = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full pl-10 pr-10 py-2 border rounded-lg bg-foreground border-background "
+                className="w-full pl-10 pr-10 py-2 border rounded-lg bg-foreground border-background"
                 placeholder="Enter your password"
               />
               <button
@@ -124,7 +125,7 @@ const AuthForm = () => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-10 py-2  rounded-lg bg-foreground border border-background "
+                  className="w-full pl-10 pr-10 py-2 border rounded-lg bg-foreground border-background"
                   placeholder="Confirm your password"
                 />
                 <button
@@ -140,7 +141,7 @@ const AuthForm = () => {
 
             <button
               type="submit"
-              className="px-12 font-semibold justify-self-center py-2 text-background hover:text-background bg-foreground border hover:border-white  rounded-lg hover:bg-foreground focus:outline-none"
+              className="px-12 font-semibold justify-self-center py-2 text-background hover:text-background bg-foreground border hover:border-white rounded-lg hover:bg-foreground focus:outline-none"
             >
               {isRegister ? "Register" : "Login"}
             </button>
@@ -148,14 +149,12 @@ const AuthForm = () => {
 
           <div className="text-center">
             <p className="text-sm text-background">
-              {isRegister ? "Already have an account?" : "Don't have an account?"} {" "}
+              {isRegister ? "Already have an account?" : "Don't have an account?"}{" "}
               <button
                 onClick={() => setIsRegister(!isRegister)}
-                className="text-white hover:underline focus:outline-none "
-              ><strong>
-
-                {isRegister ? "Login" : "Register"}
-              </strong>
+                className="text-white hover:underline focus:outline-none"
+              >
+                <strong>{isRegister ? "Login" : "Register"}</strong>
               </button>
             </p>
           </div>

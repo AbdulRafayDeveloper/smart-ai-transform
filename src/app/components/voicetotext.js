@@ -1,7 +1,8 @@
 'use client';
 import { useState } from 'react';
 import axios from 'axios';
-import "./css/responsive.css"
+import "./css/responsive.css";
+
 const VoiceToText = () => {
   const [text, setText] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -75,18 +76,18 @@ const VoiceToText = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background -mt-4  text-background custom-margin-bottom">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background text-background px-4 md:px-10 pt-28 md:pt-14 lg:pt-20 xl:pt-28 pb-32">
+
       {/* Tool Heading */}
       <div className='w-3/5 text-center xs:mt-28 md:mt-28 lg:mt-0 custom-margin-top'>
-
-      <h2 className="text-3xl font-bold text-foreground mb-4">🎙️ Voice-to-Text Converter</h2>
-      <p className='text-foreground text-lg mb-10 font-medium'>
-      A voice-to-text converter is a tool that transcribes spoken words into written text using speech recognition technology. It captures audio input, processes it through advanced algorithms, and generates accurate text output. 
-      </p>
+        <h2 className="text-3xl font-bold text-foreground mb-4">🎙️ Voice-to-Text Converter</h2>
+        <p className='text-foreground text-lg mb-10 font-medium'>
+          A voice-to-text converter is a tool that transcribes spoken words into written text using speech recognition technology. It captures audio input, processes it through advanced algorithms, and generates accurate text output.
+        </p>
       </div>
 
       {/* Voice Input Section */}
-      <div className="w-full max-w-5xl  bg-foreground border-gray-300 p-6 rounded-lg shadow-lg">
+      <div className="w-full max-w-5xl bg-foreground border-gray-300 p-6 rounded-lg shadow-lg">
         <label className="block text-background text-lg mb-2">
           Speak into your microphone or upload an audio file:
         </label>

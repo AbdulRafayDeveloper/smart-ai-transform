@@ -15,12 +15,12 @@ const TextToImage = () => {
     <div className="flex flex-col items-center min-h-screen mt-10 p-4 bg-background">
       <div className="w-3/5 text-center md:mt-7">
 
-      <h1 className="text-2xl md:text-3xl font-bold pt-24 text-foreground lg:mb-4 mb-6">
-        📄 AI Text-to-Image Generator
-      </h1>
-      <p className="text-foreground text-lg mb-10 font-medium">
-      An AI text-to-image generator turns written descriptions into unique images using advanced artificial intelligence, making it easy to create visuals for design, content, and creative projects directly from text.
-      </p>
+        <h1 className="text-2xl md:text-3xl font-bold pt-24 text-foreground lg:mb-4 mb-6">
+          📄 AI Text-to-Image Generator
+        </h1>
+        <p className="text-foreground text-lg mb-10 font-medium">
+          An AI text-to-image generator turns written descriptions into unique images using advanced artificial intelligence, making it easy to create visuals for design, content, and creative projects directly from text.
+        </p>
       </div>
 
       <div className="shadow-lg rounded-lg p-6 w-full max-w-5xl bg-foreground border-gray-300">

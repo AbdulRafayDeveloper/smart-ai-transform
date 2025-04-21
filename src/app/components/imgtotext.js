@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import Tesseract from 'tesseract.js';
 import { CloudUpload } from '@mui/icons-material';
-import "./css/responsive.css"
+import './css/responsive.css';
+
 const TextExtraction = () => {
   const [image, setImage] = useState(null);
   const [extractedText, setExtractedText] = useState('');
@@ -30,14 +31,16 @@ const TextExtraction = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground -mt-9 custom-margin-top-ImageToText">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground pt-28 md:pt-32 lg:pt-36 px-4 md:px-8 lg:px-16 xl:px-24 pb-32 custom-margin-top-ImageToText">
+
       {/* Tool Heading */}
-      <div className="w-3/5 text-center xs:mt-28 md:mt-28 lg:mt-0 custom-margin-top">
-      <h2 className="text-3xl font-bold mb-6">📄 AI Image-to-Text Converter</h2>
-      <p className="text-foreground text-lg mb-10 font-medium">
-      An AI text-to-image generator turns written descriptions into unique images using advanced artificial intelligence, making it easy to create visuals for design, content, and creative projects directly from text.
-      </p>
+      <div className="w-full max-w-4xl text-center mb-10">
+        <h2 className="text-3xl font-bold text-foreground mb-6">📄 AI Image-to-Text Converter</h2>
+        <p className="text-foreground text-lg font-medium">
+          An AI text-to-image generator turns written descriptions into unique images using advanced artificial intelligence, making it easy to create visuals for design, content, and creative projects directly from text.
+        </p>
       </div>
+
       {/* Upload Box */}
       <div className="w-full max-w-5xl bg-foreground p-8 rounded-xl shadow-lg text-gray-900 flex flex-col items-center border-2 border-gray-300">
         <CloudUpload className="text-background" style={{ fontSize: 80 }} />
@@ -45,7 +48,7 @@ const TextExtraction = () => {
         <p className="text-background text-sm">Files supported: JPG | PNG | JPEG | GIF | JFIF</p>
 
         {/* Upload Button */}
-        <label className="mt-4 w-3xl bg-white hover:bg-foreground text-foreground hover:text-background font-bold py-3 px-6 border rounded-lg text-center cursor-pointer">
+        <label className="mt-4 w-full max-w-xs bg-white hover:bg-foreground text-foreground hover:text-background font-bold py-3 px-6 border rounded-lg text-center cursor-pointer">
           Upload Image
           <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
         </label>
