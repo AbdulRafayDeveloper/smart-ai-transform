@@ -17,6 +17,7 @@ function validateText(data) {
   return { error: null };
 }
 
+
 export async function POST(req) {
   try {
     const { text } = await req.json();
@@ -26,7 +27,7 @@ export async function POST(req) {
       return badRequestResponse(error, null);
     }
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "voices");
+    const uploadDir = path.join(process.cwd(), "public", "uploads", "text-to-speech");
 
     // Create directory if it doesn't exist
     if (!fs.existsSync(uploadDir)) {
@@ -35,7 +36,7 @@ export async function POST(req) {
 
     const filename = `${uuidv4()}.mp3`;
     const filepath = path.join(uploadDir, filename);
-    const relativePath = `/uploads/voices/${filename}`;
+    const relativePath = `/uploads/text-to-speech/${filename}`;
 
     const gtts = new gTTS(text, "en");
 

@@ -1,48 +1,93 @@
-// // src/app/api/speech-to-text/route.js
+import fs from "fs";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+import { successResponse, badRequestResponse, serverErrorResponse } from "../../helper/apiResponseHelpers";
+import dotenv from "dotenv";
 
-// import { writeFile } from "fs/promises";
-// import path from "path";
-// import { v4 as uuidv4 } from "uuid";
-// import { successResponse, badRequestResponse, serverErrorResponse } from "@/app/helper/apiResponseHelpers";
+dotenv.config();
 
-// export async function POST(req) {
-//   try {
-//     const formData = await req.formData();
-//     const voiceFile = formData.get("voice");
+// Hugging Face API setup
+const hfApi = axios.create({
+    baseURL: 'https://api-inference.huggingface.co/models/',
+    headers: {
+        Authorization: `Bearer ${process.env.HF_API_TOKEN}`,
+    },
+});
 
-//     if (!voiceFile || typeof voiceFile === "string") {
-//       return badRequestResponse("Voice file is required.", null);
-//     }
+// Validate file helper
+function validateFile(file) {
+    if (!file || file.size === 0) {
+        return { error: "Audio file is required and must not be empty." };
+    }
+    return { error: null };
+}
 
-//     const ext = path.extname(voiceFile.name || "").toLowerCase();
-//     const allowedExtensions = [".mp3", ".wav", ".ogg", ".webm", ".m4a"];
-//     if (!allowedExtensions.includes(ext)) {
-//       return badRequestResponse("Invalid file format. Only audio files are allowed.", null);
-//     }
+export async function POST(req) {
+    try {
+        const formData = await req.formData();
+        console.log("formData: ", formData);
+        const file = formData.get("audio");
 
-//     // Create uploads dir
-//     const uploadDir = path.join(process.cwd(), "public", "uploads", "speech-to-text");
-//     const filename = `${uuidv4()}${ext}`;
-//     const filepath = path.join(uploadDir, filename);
+        if (!file || typeof file === "string") {
+            return badRequestResponse("Audio file is required.", null);
+        }
 
-//     // Ensure directory exists
-//     await import("fs").then(fs => {
-//       if (!fs.existsSync(uploadDir)) {
-//         fs.mkdirSync(uploadDir, { recursive: true });
-//       }
-//     });
+        console.log("file: ", file);
 
-//     // Read stream and write to file
-//     const arrayBuffer = await voiceFile.arrayBuffer();
-//     const buffer = Buffer.from(arrayBuffer);
-//     await writeFile(filepath, buffer);
+        const { error } = validateFile(file);
+        if (error) {
+            return badRequestResponse(error, null);
+        }
 
-//     return successResponse("Voice file uploaded successfully", {
-//       savedPath: `/uploads/speech-to-text/${filename}`,
-//     });
+        console.log("error: ", error);
 
-//   } catch (error) {
-//     console.error("Upload error:", error);
-//     return serverErrorResponse("Error uploading audio: " + error.message);
-//   }
-// }
+        // Save uploaded audio temporarily
+        const uploadDir = path.join(process.cwd(), "public", "uploads", "speech-to-text");
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        console.log("uploadDir: ", uploadDir);
+
+        const filename = `${uuidv4()}.mp3`;
+        const filepath = path.join(uploadDir, filename);
+
+        console.log("filepath: ", filepath);
+
+        const fileBuffer = Buffer.from(await file.arrayBuffer());
+        fs.writeFileSync(filepath, fileBuffer);
+
+        console.log("fileBuffer: ", fileBuffer);
+
+        // Read the saved file
+        const audioData = fs.readFileSync(filepath);
+
+        const modelId = "openai/whisper-large-v3";
+
+        console.log("modelId: ", modelId);
+
+        // Send audio to HuggingFace
+        const response = await hfApi.post(modelId, audioData, {
+            headers: {
+                "Content-Type": file.type || "audio/mpeg", // dynamic or fallback to audio/mpeg
+            },
+        });
+
+        console.log("response: ", response);
+
+        // Delete the temp file
+        fs.unlinkSync(filepath);
+
+        console.log("audioData: ", audioData);
+
+        // Return transcription
+        return successResponse("Transcription successful", {
+            transcription: response.data.text,
+        });
+
+    } catch (error) {
+        console.error("Speech-to-Text error:", error.response?.data || error.message);
+        return serverErrorResponse("Error transcribing audio: " + (error.response?.data?.error || error.message));
+    }
+}
