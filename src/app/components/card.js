@@ -5,6 +5,7 @@ import {
   CardDataExtraction,
   CardDataVoiceToText,
 } from "../dataset/data";
+import Image from "next/image";
 
 const Card = () => {
   return (
@@ -21,7 +22,8 @@ const Card = () => {
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 TexttoVideo"
               >
-                <img src={el.image} alt="cards" className="w-16 h-16 mx-auto text-white" />
+                {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto text-white" /> */}
+                <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
                 <h5 className="mt-5 text-2xl font-medium text-background text-center TexttoVideo_h5">
                   {el.title}
                 </h5>
@@ -50,7 +52,8 @@ const Card = () => {
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 TexttoSpeech"
               >
-                <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
+                {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" /> */}
+                <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
                 <h5 className="mt-5 text-xl font-medium text-background text-center">
                   {el.title}
                 </h5>
@@ -79,7 +82,8 @@ const Card = () => {
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 ImagetoText"
               >
-                <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
+                {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" /> */}
+                <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
                 <h5 className="mt-5 text-xl font-medium text-background text-center">
                   {el.title}
                 </h5>
@@ -108,7 +112,8 @@ const Card = () => {
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 VoicetoText"
               >
-                <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" />
+                {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" /> */}
+                <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
                 <h5 className="mt-5 text-xl font-medium text-background text-center">
                   {el.title}
                 </h5>

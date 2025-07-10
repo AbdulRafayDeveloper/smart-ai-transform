@@ -4,6 +4,8 @@ import Link from "next/link";
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
+
 function Header() {
     const router = useRouter();
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
@@ -27,7 +29,8 @@ function Header() {
                 {/* Left Side Text */}
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
-                    <img src="/img/logo.png" className="w-1/4 h-10 sm:h-10" alt="Logo" />
+                    {/* <img src="/img/logo.png" className="w-1/4 h-10 sm:h-10" alt="Logo" /> */}
+                    <Image src="/img/logo.png" alt="Logo" width={50} height={50} />
                     <p className="pl-2 font-semibold text-background md:text-3xl text-2xl custom-logo-size">
                         SmartTransform
                     </p>

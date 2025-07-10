@@ -1,6 +1,8 @@
 import Card from "./card";
 import Link from "next/link";
 import "../components/css/homePageAnimation.css"
+import Image from "next/image";
+
 const Homepagesection = () => {
   return (
     <>
@@ -26,7 +28,8 @@ const Homepagesection = () => {
 
           {/* Right: Image */}
           <div className="lg:w-1/2 flex justify-center items-center mt-9">
-            <img src="/img/bg1.jpg" alt="AI Tools" className="w-full max-w-[80%] rounded-lg shadow-lg" />
+            {/* <img src="/img/bg1.jpg" alt="AI Tools" className="w-full max-w-[80%] rounded-lg shadow-lg" /> */}
+            <Image src="/img/bg1.jpg" alt="AI Tools" width={100} height={100} className="w-full max-w-[80%] rounded-lg shadow-lg" />
           </div>
         </div>
       </section>

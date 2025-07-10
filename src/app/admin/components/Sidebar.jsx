@@ -137,7 +137,7 @@
 //         </div>
 //       </div>
 
-//       {/* Button to open the sidebar when it's collapsed */}
+//       {/* Button to open the sidebar when It&apos;s collapsed */}
 //       {/* {!isOpen && (
 //         <button
 //           className="fixed top-16 mt-2 left-3 p-2 bg-blue-500 text-white rounded-full z-50"

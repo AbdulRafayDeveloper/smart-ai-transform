@@ -77,7 +77,7 @@ function Page() {
     };
 
     fetchStats();
-  }, []);
+  }, [token]);
 
   return (
     <div className="flex h-screen">

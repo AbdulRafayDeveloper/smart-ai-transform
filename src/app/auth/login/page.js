@@ -158,7 +158,7 @@ const AuthForm = () => {
 
           <div className="text-center">
             <p className="text-sm text-background">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/auth/register" className="text-white hover:underline focus:outline-none">
                 <strong>Register</strong>
               </Link>

@@ -96,6 +96,7 @@
 // export default Footer;
 
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -105,11 +106,12 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-3">
-              <img src="/img/logo.png" className="h-20 w-20 rounded-full shadow-lg" alt="Logo" />
+              {/* <img src="/img/logo.png" className="h-20 w-20 rounded-full shadow-lg" alt="Logo" /> */}
+              <Image src="/img/logo.png" alt="Logo" width={100} height={100} className="h-20 w-20 rounded-full shadow-lg" />
             </Link>
             <p className="mt-6 text-background leading-relaxed">
               Easily convert, extract, and process a wide variety of media file formats using our user-friendly tools, designed to save you time and effort.
-              Whether you're working with MP4, MP3, WAV, or other formats, enjoy high-quality results and seamless performance tailored for your needs.
+              Whether you&apos;re working with MP4, MP3, WAV, or other formats, enjoy high-quality results and seamless performance tailored for your needs.
             </p>
           </div>
 

@@ -7,6 +7,7 @@ import { Download } from 'lucide-react';
 import "./css/responsive.css";
 import "./css/selectionRecolor.css";
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 
 const TextToImage = () => {
   const [text, setText] = useState("");
@@ -119,7 +120,8 @@ const TextToImage = () => {
 
         {image && (
           <div className="relative mt-6">
-            <img src={image} alt="Generated" className="w-full rounded-lg shadow-lg" />
+            {/* <img src={image} alt="Generated" className="w-full rounded-lg shadow-lg" /> */}
+            <Image src={image} alt="logo" width={100} height={100} className="absolute top-2 left-2" />
             <button
               onClick={downloadImage}
               className="absolute top-2 right-2 bg-background bg-opacity-75 hover:bg-opacity-100 p-2 rounded-full"

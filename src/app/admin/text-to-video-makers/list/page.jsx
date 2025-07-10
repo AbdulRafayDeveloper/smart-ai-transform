@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import { FaTrash } from "react-icons/fa";
 import Loading from "../../components/Loading";
 import LinkingWithSidebar from "../../components/LinkingWithSidebar";
@@ -21,7 +21,7 @@ function Page() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
 
-    const fetchData = async (query = "", page = 1) => {
+    const fetchData = useCallback(async (query = "", page = 1) => {
         try {
             setLoading(true);
             const res = await axios.get(
@@ -46,11 +46,11 @@ function Page() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
     const handleFilter = () => {
         fetchData(searchQuery, 1);
