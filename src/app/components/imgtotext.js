@@ -6,6 +6,7 @@ import './css/responsive.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
+import Image from 'next/image';
 
 const TextExtraction = () => {
   const [image, setImage] = useState(null);
@@ -103,7 +104,15 @@ const TextExtraction = () => {
 
       {image && (
         <div className="mt-6 w-full max-w-lg">
-          <img src={URL.createObjectURL(image)} alt="Uploaded" className="w-full rounded-lg shadow-md" />
+          {/* <img src={URL.createObjectURL(image)} alt="Uploaded" className="w-full rounded-lg shadow-md" /> */}
+          <Image
+            src={URL.createObjectURL(image)}
+            alt="output"
+            width={500} // ✅ set actual width
+            height={500} // ✅ set actual height
+            className="rounded"
+          />
+
           <button
             onClick={handleExtractText}
             className="mt-4 w-full bg-white hover:bg-foreground text-foreground hover:text-background font-bold py-3 border-2 rounded-lg transition-all duration-300"

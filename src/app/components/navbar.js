@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import "../components/css/responsive.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
 
 const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +46,15 @@ const Navbar = (props) => {
           {/* Logo and System Name on Left */}
           <div className="flex items-center mr-auto">
             <Link href="/" className="flex items-center">
-              <img src="/img/logo.png" className="h-10 sm:h-10" alt="Logo" />
+              {/* <img src="/img/logo.png" className="h-10 sm:h-10" alt="Logo" /> */}
+              <Image
+                src="/img/logo.png"
+                alt="logo"
+                width={100} // adjust based on your design
+                height={32}
+                className="h-8 w-auto"
+              />
+
               <p className="pl-2 font-semibold text-white md:text-3xl text-2xl custom-logo-size">
                 SmartTransform
               </p>
@@ -98,8 +107,8 @@ const Navbar = (props) => {
                   <Link
                     href={item.href}
                     className={`block py-2 custom-navLink-size ${pathname === item.href
-                        ? "text-indigo-400 border-b-2 border-indigo-400"
-                        : "text-white hover:text-gray-300 hover:underline"
+                      ? "text-indigo-400 border-b-2 border-indigo-400"
+                      : "text-white hover:text-gray-300 hover:underline"
                       }`}
                   >
                     {item.label}
