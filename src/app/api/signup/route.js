@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { validateUser } from "@/app/helper/validateUser";
 import { Users } from "@/app/config/Models/Users/users";
