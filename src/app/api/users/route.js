@@ -10,13 +10,41 @@ import {
   unauthorizedResponse,
   notFoundResponse,
 } from "@/app/helper/apiResponseHelpers";
+import serverSideValidation from "@/app/helper/serverSideValidation";
 
 export async function GET(req) {
   try {
-    const token = serverSideValidations.checkTokenValidationStyle(req);
-    const user = await serverSideValidations.validateUserByToken(token);
+    const token = serverSideValidation.extractAuthToken(req);
 
-    if (user.status) return user;
+    if (typeof token !== "string") {
+      return notFoundResponse("Token not found or invalid.", null);
+    }
+
+    console.log("Token:", token);
+
+    const user = await serverSideValidation.validateAdminByToken(token);
+
+    console.log("User:", user);
+
+    // Check if it's a NextResponse object (error), then return it directly
+    if (user && user.status) {
+      return user;
+    }
+
+    if (!user || !user._id) {
+      return notFoundResponse("User not found or invalid token.", null);
+    }
+
+    const id = user._id;
+
+    // Find user by id
+    const userData = await Users.findById(id);
+
+    console.log("User Data:", userData);
+
+    if (!userData) {
+      return notFoundResponse("User not found.", null);
+    }
 
     const {
       search = "",
@@ -24,8 +52,12 @@ export async function GET(req) {
       pageSize = 5,
     } = Object.fromEntries(req.nextUrl.searchParams);
 
+    console.log("Search:", search);
+    console.log("Page Number:", pageNumber);
+    console.log("Page Size:", pageSize);
+
     var filters = search
-      ? { username: { $regex: search, $options: "i" }, role: { $ne: "admin" } }
+      ? { email: { $regex: search, $options: "i" }, role: { $ne: "admin" } }
       : { role: { $ne: "admin" } };
 
     const page = parseInt(pageNumber);
@@ -39,6 +71,8 @@ export async function GET(req) {
     if (!users || users.length === 0) {
       return successResponse("No users found", null);
     }
+
+    console.log("Users:", users);
 
     return successResponse("Users retrieved successfully", {
       users,

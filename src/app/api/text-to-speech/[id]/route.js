@@ -1,76 +1,60 @@
 import { NextResponse } from "next/server";
-import { Users } from "@/app/config/Models/Users/users";
-import serverSideValidations from "@/app/helper/serverSideValidations";
 import {
   successResponse,
-  badRequestResponse,
-  conflictResponse,
   serverErrorResponse,
-  unauthorizedResponse,
   notFoundResponse,
+  badRequestResponse,
 } from "@/app/helper/apiResponseHelpers";
 import db from "@/app/config/db";
-import { Subscribers } from "@/app/config/Models/Subscriber/subscribers";
+import { Users } from "@/app/config/Models/Users/users";
+import { TextToSpeechUsers } from "@/app/config/Models/TextToSpeechUsers/TextToSpeechUsers";
+import serverSideValidation from "@/app/helper/serverSideValidation";
 
-export async function GET(req, res) {
+export async function DELETE(req) {
   try {
-    const token = serverSideValidations.checkTokenValidationStyle(req);
-    const user = await serverSideValidations.validateUserByToken(token);
-    if (user.status) return user;
 
-    const id = new URL(req.url).pathname.split("/").pop();
-    const foundUser = await Users.findById(id);
+    const token = serverSideValidation.extractAuthToken(req);
 
-    if (!foundUser) {
+    if (typeof token !== "string") {
+      return notFoundResponse("Token not found or invalid.", null);
+    }
+
+    console.log("Token:", token);
+
+    const user = await serverSideValidation.validateAdminByToken(token);
+
+    console.log("User:", user);
+
+    if (user && user.status) {
+      return user;
+    }
+
+    if (!user || !user._id) {
+      return notFoundResponse("User not found or invalid token.", null);
+    }
+
+    const userId = user._id;
+
+    // Find user by userId
+    const userData = await Users.findById(userId);
+
+    console.log("User Data:", userData);
+
+    if (!userData) {
       return notFoundResponse("User not found.", null);
     }
 
-    return successResponse("User retrieved successfully.", foundUser);
-  } catch (error) {
-    return serverErrorResponse(error.message);
-  }
-}
-
-export async function PUT(req, res) {
-  try {
-    const token = serverSideValidations.checkTokenValidationStyle(req);
-    const user = await serverSideValidations.validateUserByToken(token);
-    if (user.status) return user;
-
     const id = new URL(req.url).pathname.split("/").pop();
 
-    const updates = await req.json();
+    const deleteUser = await TextToSpeechUsers.findByIdAndDelete(id);
 
-    const updatedUser = await Users.findByIdAndUpdate(
-      id,
-      { username: updates.username },
-      { new: true }
-    );
+    console.log("Delete User:", deleteUser);
 
-    if (!updatedUser) {
-      return notFoundResponse("User not found for updating.", null);
-    }
-
-    return successResponse("User updated successfully.", updatedUser);
-  } catch (error) {
-    return serverErrorResponse(error.message);
-  }
-}
-
-export async function DELETE(req, res) {
-  try {
-    const token = serverSideValidations.checkTokenValidationStyle(req);
-    const user = await serverSideValidations.validateUserByToken(token);
-    if (user.status) return user;
-
-    const id = new URL(req.url).pathname.split("/").pop();
-    const deletedUser = await Users.findByIdAndDelete(id);
-    const deleteSubscriber = await Subscribers.findOneAndDelete({ userId: id });
-    if (!deletedUser || !deleteSubscriber) {
+    if (!deleteUser) {
       return notFoundResponse("User not found for deletion.", null);
     }
 
-    return successResponse("User deleted successfully.", deletedUser);
+    return successResponse("User deleted successfully.", deleteUser);
   } catch (error) {
     return serverErrorResponse(error.message);
   }

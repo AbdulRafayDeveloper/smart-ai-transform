@@ -12,13 +12,11 @@ import {
   serverErrorResponse,
 } from "@/app/helper/apiResponseHelpers";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 export async function POST(req) {
   try {
-    const { username, email, password, role } = await req.json();
+    const { fullName, email, password } = await req.json();
 
-    const { error } = validateUser({ username, email, password, role });
+    const { error } = validateUser({ fullName, email, password });
     if (error) {
       return badRequestResponse(error.details[0].message, null);
     }
@@ -26,16 +24,15 @@ export async function POST(req) {
     const existingUser = await Users.findOne({ email });
 
     if (existingUser) {
-      return conflictResponse("Email already exists", null);
+      return conflictResponse("Account already exists with this email address", null);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new Users({
-      username,
+      fullName,
       email,
-      role,
-      password: hashedPassword,
+      hashedPassword: hashedPassword,
     });
 
     const savedUser = await newUser.save();
@@ -44,21 +41,9 @@ export async function POST(req) {
       return serverErrorResponse("Failed to save the user. Please try again.");
     }
 
-    const token = jwt.sign(
-      { id: newUser._id, name: newUser.username, role: newUser.role },
-      JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    if (!token) {
-      console.error("Failed to generate JWT token.");
-      return serverErrorResponse("Failed to generate authentication token.");
-    }
-
     return successResponse("User registered successfully", {
-      token: token,
-      user: newUser,
-      role,
+      user: savedUser,
+      role: savedUser.role,
     });
   } catch (error) {
     return serverErrorResponse(error.message);

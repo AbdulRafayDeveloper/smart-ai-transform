@@ -1,15 +1,12 @@
 import Joi from "joi";
 
 const userSchema = Joi.object({
-  username: Joi.string()
-    .pattern(/^[A-Za-z]+$/)
+  fullName: Joi.string()
     .min(3)
     .required()
     .messages({
-      "string.pattern.base":
-        "Username must only contain alphabets without numbers or special characters.",
-      "string.empty": "Username is required.",
-      "string.min": "Username must be at least 3 characters long.",
+      "string.empty": "fullName is required.",
+      "string.min": "fullName must be at least 3 characters long.",
     }),
 
   email: Joi.string().email().required().messages({
@@ -17,18 +14,17 @@ const userSchema = Joi.object({
     "string.empty": "Email is required.",
   }),
 
-  password: Joi.string().min(8).required().messages({
-    "string.min": "Password must be at least 8 characters long.",
-    "string.empty": "Password is required.",
-  }),
-
-  role: Joi.string()
-    .valid("homeowner", "realtor", "mortgage")
+  password: Joi.string()
+    .min(8)
+    .pattern(new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])"))
     .required()
     .messages({
-      "any.only": "Please select a valid role to create a account",
-      "string.empty": "Role is required.",
+      "string.pattern.base":
+        "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character (!@#$%^&*).",
+      "string.min": "Password must be at least 8 characters long.",
+      "string.empty": "Password is required.",
     }),
+
 });
 
 export function validateUser(data) {

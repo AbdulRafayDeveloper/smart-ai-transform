@@ -1,6 +1,7 @@
 "use client";
+import { ToastContainer } from 'react-toastify';
 import Featured from "./components/featured";
-import RewriterTool from "./components/rewritertool";
+import AiTool from "./components/SmartTool";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import Questions from "./components/question";
@@ -10,10 +11,10 @@ const Index = () => {
   return (
     <>
       <Navbar />
-      <Homepagesection/>
+      <Homepagesection />
       <Featured />
-      <RewriterTool />
-      <Questions/>
+      <AiTool />
+      <Questions />
       <Footer />
     </>
   );

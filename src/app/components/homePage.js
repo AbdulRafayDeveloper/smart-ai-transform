@@ -21,7 +21,7 @@ const Homepagesection = () => {
               accurate transformations for content creators, businesses, and
               professionals.
             </p>
-            <Link href="/" className="py-4 px-6 bg-foreground text-background rounded-lg shadow-lg text-sm">Reister Now</Link>
+            <Link href="/auth/register" className="py-4 px-6 bg-foreground text-background rounded-lg shadow-lg text-sm">Register Now</Link>
           </div>
 
           {/* Right: Image */}

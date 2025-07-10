@@ -1,101 +1,312 @@
+// import { successResponse, badRequestResponse, serverErrorResponse, notFoundResponse, conflictResponse, unsupportedMediaTypeResponse } from "../../helper/apiResponseHelpers";
+// import tesseract from "node-tesseract-ocr";
+// import { Users } from "@/app/config/Models/Users/users";
+// import { ImageToTextUsers } from "@/app/config/Models/ImageToTextUsers/ImageToTextUsers";
+// import { NextResponse } from "next/server";
+// import serverSideValidation from "@/app/helper/serverSideValidation";
+
+// export async function POST(req) {
+//     try {
+//         const token = serverSideValidation.extractAuthToken(req);
+
+//         if (typeof token !== "string") {
+//             return notFoundResponse("Token not found or invalid.", null);
+//         }
+
+//         const user = await serverSideValidation.validateUserByToken(token);
+
+//         if (!user) {
+//             return notFoundResponse("User not found or invalid token.", null);
+//         }
+
+//         const id = user._id;
+//         console.log(id);
+
+//         if (!id) {
+//             return NextResponse.json(
+//                 { success: false, message: "User ID not found." },
+//                 { status: 404 }
+//             );
+//         }
+
+//         // find user by id
+//         const userData = await Users.findById(id);
+
+//         if (!userData) {
+//             return notFoundResponse("User not found.", null);
+//         }
+
+//         const formData = await req.formData();
+//         const file = formData.get("image");
+
+//         if (!file || typeof file === "string") {
+//             return badRequestResponse("Image file is required.", null);
+//         }
+
+//         const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+//         if (!allowedTypes.includes(file.type)) {
+//             return badRequestResponse("Only JPG, JPEG, and PNG images are allowed.", null);
+//         }
+
+//         if (file.size > 5 * 1024 * 1024) {
+//             return badRequestResponse("File size should not exceed 5MB.", null);
+//         }
+
+//         const buffer = Buffer.from(await file.arrayBuffer());
+
+//         // Save buffer to temp file
+//         const fs = require("fs");
+//         const path = require("path");
+//         const tempPath = path.join(process.cwd(), "temp-image.png");
+//         fs.writeFileSync(tempPath, buffer);
+
+//         const text = await tesseract.recognize(tempPath, {
+//             lang: "eng",
+//         });
+
+//         fs.unlinkSync(tempPath);
+
+//         if (!text.trim()) {
+//             return badRequestResponse("No text found in the image.", null);
+//         }
+
+//         // save user activity log
+//         const newLog = new ImageToTextUsers({
+//             userId: userData._id,
+//             email: userData.email,
+//         });
+
+//         const savedLog = await newLog.save();
+
+//         if (!savedLog) {
+//             return serverErrorResponse("Failed to save user activity log.");
+//         }
+
+//         return successResponse("Text extracted successfully", { description: text.trim() });
+//     } catch (error) {
+//         console.error("OCR error:", error);
+//         return serverErrorResponse("An error occurred while processing the image.");
+//     }
+// }
+
+// with open ai
+
+import {
+    successResponse,
+    badRequestResponse,
+    serverErrorResponse,
+    notFoundResponse,
+} from "../../helper/apiResponseHelpers";
+import { Users } from "@/app/config/Models/Users/users";
+import { ImageToTextUsers } from "@/app/config/Models/ImageToTextUsers/ImageToTextUsers";
+import { NextResponse } from "next/server";
+import serverSideValidation from "@/app/helper/serverSideValidation";
+import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
-import { v4 as uuidv4 } from "uuid";
-import { successResponse, badRequestResponse, serverErrorResponse } from "../../helper/apiResponseHelpers";
-import dotenv from "dotenv";
-import { HfInference } from "@huggingface/inference";
 
-dotenv.config();
-
-// Validate file helper
-function validateFile(file) {
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
-    if (!allowedTypes.includes(file.type)) {
-        return { error: "Only JPG, JPEG, and PNG images are allowed." };
-    }
-    if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        return { error: "File size should not exceed 5MB." };
-    }
-    return { error: null };
-}
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 export async function POST(req) {
-    let filePath = null;
-
     try {
+        const token = serverSideValidation.extractAuthToken(req);
+
+        if (typeof token !== "string") {
+            return notFoundResponse("Token not found or invalid.", null);
+        }
+
+        console.log("Token:", token);
+
+        const user = await serverSideValidation.validateUserByToken(token);
+
+        console.log("User:", user);
+
+        // Check if it's a NextResponse object (error), then return it directly
+        if (user && user.status) {
+            return user;
+        }
+
+        if (!user || !user._id) {
+            return notFoundResponse("User not found or invalid token.", null);
+        }
+
+
+        console.log("User:", user);
+
+        const id = user._id;
+
+        if (!id) {
+            return NextResponse.json(
+                { success: false, message: "User ID not found." },
+                { status: 404 }
+            );
+        }
+
+        // Find user by id
+        const userData = await Users.findById(id);
+
+        console.log("User Data:", userData);
+
+        if (!userData) {
+            return notFoundResponse("User not found.", null);
+        }
+
         const formData = await req.formData();
         const file = formData.get("image");
+
+        console.log("File:", file);
 
         if (!file || typeof file === "string") {
             return badRequestResponse("Image file is required.", null);
         }
 
-        const { error } = validateFile(file);
-        if (error) {
-            return badRequestResponse(error, null);
+        const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!allowedTypes.includes(file.type)) {
+            return badRequestResponse("Only JPG, JPEG, and PNG images are allowed.", null);
         }
 
-        // Create upload directory if it doesn't exist
-        const uploadDir = path.join(process.cwd(), "public", "uploads", "image-to-text");
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+        // Check file size (5MB limit)
+        console.log("File size:", file.size);
+
+        if (file.size > 5 * 1024 * 1024) {
+            return badRequestResponse("File size should not exceed 5MB.", null);
         }
 
-        const filename = `${uuidv4()}.jpg`;
-        const filepath = path.join(uploadDir, filename);
-        filePath = filepath;
+        // Save buffer to temp file
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const tempPath = path.join(process.cwd(), "temp-upload-image.png");
+        fs.writeFileSync(tempPath, buffer);
 
-        // Save the uploaded image
-        const imageBuffer = Buffer.from(await file.arrayBuffer());
-        fs.writeFileSync(filepath, imageBuffer);
+        console.log("Temporary image saved at:", tempPath);
 
-        // Read file and convert to base64
-        const fileBuffer = fs.readFileSync(filepath);
-        const base64Image = fileBuffer.toString("base64");
-        const imageDataUrl = `data:image/jpeg;base64,${base64Image}`;
+        // Convert file to base64
+        const base64Image = fs.readFileSync(tempPath, { encoding: "base64" });
+        const dataUri = `data:${file.type};base64,${base64Image}`;
 
-        // Initialize Hugging Face Inference client
-        const client = new HfInference(process.env.HF_API_TOKEN);
+        console.log("Data URI:", dataUri);
 
-        // Call HuggingFace API for detailed image description
-        const chatCompletion = await client.chatCompletion({
-            model: "Qwen/Qwen2-VL-7B-Instruct",
+        // Use OpenAI Vision to describe the image
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini", // you can use a vision-capable model, adjust as needed
             messages: [
                 {
                     role: "user",
                     content: [
-                        {
-                            type: "text",
-                            text: "Please describe everything you observe in this image in detail.",
-                        },
+                        { type: "text", text: "Describe what is happening in this image in detail." },
                         {
                             type: "image_url",
-                            image_url: { url: imageDataUrl },
+                            image_url: {
+                                url: dataUri,
+                            },
                         },
                     ],
                 },
             ],
-            provider: "nebius",
-            max_tokens: 1000, // For longer descriptions
         });
 
-        const description = chatCompletion?.choices?.[0]?.message?.content || null;
+        console.log("OpenAI response:", response);
 
-        if (!description) {
+        // Delete temp image
+        fs.unlinkSync(tempPath);
+
+        const description = response.choices[0].message.content;
+
+        console.log("Image description:", description);
+
+        if (!description || !description.trim()) {
             return badRequestResponse("Failed to generate image description.", null);
         }
 
-        return successResponse("Image description generated successfully", {
-            description,
+        // Save user activity log
+        const newLog = new ImageToTextUsers({
+            userId: userData._id,
+            email: userData.email,
         });
 
-    } catch (error) {
-        console.error("Image-to-text error:", error?.response?.data || error.message);
-        return serverErrorResponse("An error occurred while processing the image.");
-    } finally {
-        // Cleanup uploaded file
-        if (filePath && fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+        const savedLog = await newLog.save();
+
+        if (!savedLog) {
+            return serverErrorResponse("Failed to save user activity log.");
         }
+
+        return successResponse("Image described successfully", { description });
+    } catch (error) {
+        console.error("Image description error:", error);
+        return serverErrorResponse("An error occurred while describing the image.");
     }
+}
+
+export async function GET(req) {
+  try {
+    const token = serverSideValidation.extractAuthToken(req);
+
+    if (typeof token !== "string") {
+      return notFoundResponse("Token not found or invalid.", null);
+    }
+
+    console.log("Token:", token);
+
+    const user = await serverSideValidation.validateAdminByToken(token);
+
+    console.log("User:", user);
+
+    // Check if it's a NextResponse object (error), then return it directly
+    if (user && user.status) {
+      return user;
+    }
+
+    if (!user || !user._id) {
+      return notFoundResponse("User not found or invalid token.", null);
+    }
+
+    const id = user._id;
+
+    // Find user by id
+    const userData = await Users.findById(id);
+
+    console.log("User Data:", userData);
+
+    if (!userData) {
+      return notFoundResponse("User not found.", null);
+    }
+
+    const {
+      search = "",
+      pageNumber = 1,
+      pageSize = 5,
+    } = Object.fromEntries(req.nextUrl.searchParams);
+
+    console.log("Search:", search);
+    console.log("Page Number:", pageNumber);
+    console.log("Page Size:", pageSize);
+
+    var filters = search
+      ? { email: { $regex: search, $options: "i" }, role: { $ne: "admin" } }
+      : { role: { $ne: "admin" } };
+
+    const page = parseInt(pageNumber);
+    const size = parseInt(pageSize);
+
+    const skip = (page - 1) * size;
+
+    const users = await ImageToTextUsers.find(filters).skip(skip).limit(size);
+    const totalUsersCount = await ImageToTextUsers.countDocuments(filters);
+
+    if (!users || users.length === 0) {
+      return successResponse("No users found", null);
+    }
+
+    console.log("Users:", users);
+
+    return successResponse("Users retrieved successfully", {
+      users,
+      totalUsersCount,
+      pageNumber: page,
+      pageSize: size,
+    });
+  } catch (error) {
+    return serverErrorResponse(error.message);
+  }
 }

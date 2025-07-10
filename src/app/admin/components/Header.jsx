@@ -17,7 +17,7 @@ function Header() {
             confirmButtonText: "OK",
         }).then(() => {
             Cookies.remove('token');
-            router.push("../../loginform/page");
+            router.push("../../auth/login");
         });
     }
 
