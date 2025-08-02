@@ -56,7 +56,7 @@ const Navbar = (props) => {
               />
 
               <p className="pl-2 font-semibold text-white md:text-3xl text-2xl custom-logo-size">
-                SmartTransform
+                ContentVerse AI
               </p>
             </Link>
           </div>
@@ -96,6 +96,7 @@ const Navbar = (props) => {
               className={`flex flex-col mt-4 md:flex-row md:mt-0 md:space-x-5 ${props.admin ? "hidden" : ""}`}
             >
               {[
+                { href: "/", label: "Home" },
                 { href: "/aboutpage", label: "About Us" },
                 { href: "/textvideo", label: "SmartVidz" },
                 { href: "/textspeak", label: "SmartSpeak" },

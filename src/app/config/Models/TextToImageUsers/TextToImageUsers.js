@@ -13,6 +13,20 @@ const textToImageUsersSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+    count: {
+      type: Number,
+      default: 1,
+    },
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );

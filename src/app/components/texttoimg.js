@@ -64,13 +64,14 @@ const TextToImage = () => {
         }
       });
 
-      if (!response.data || !response.data.data || !response.data.data.imagePath) {
+      if (!response.data || !response.data.data || !response.data.data.imageUrl) {
         toast.error(response.data.message || 'No imagePath returned from API');
         return;
       }
 
-      const imgPath = response.data.data.imagePath;
+      const imgPath = response.data.data.imageUrl;
       if (imgPath) {
+        console.log("Image generated successfully:", imgPath);
         setImage(imgPath);
         setText("");
         toast.success('Image generated successfully!');
@@ -119,32 +120,26 @@ const TextToImage = () => {
         </button>
 
         {image && (
-          <div className="relative mt-6">
-            {/* <img src={image} alt="Generated" className="w-full rounded-lg shadow-lg" /> */}
-            <Image src={image} alt="logo" width={100} height={100} className="absolute top-2 left-2" />
-            <button
-              onClick={downloadImage}
-              className="absolute top-2 right-2 bg-background bg-opacity-75 hover:bg-opacity-100 p-2 rounded-full"
-              title="Download image"
-            >
-              <Download size={20} />
-            </button>
+          <div className="relative w-full flex justify-center my-12">
+            <div className="relative w-full max-w-2xl">
+              <Image
+                src={image}
+                alt="Generated"
+                width={800}
+                height={600}
+                className="rounded-lg shadow-lg object-contain w-full h-auto"
+              />
+              <button
+                onClick={downloadImage}
+                className="absolute top-2 right-2 bg-background bg-opacity-75 hover:bg-opacity-100 p-2 rounded-full"
+                title="Download image"
+              >
+                <Download size={20} />
+              </button>
+            </div>
           </div>
         )}
       </div>
-
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      /> */}
     </div>
   );
 };

@@ -122,12 +122,12 @@ const CardDataVoiceToText = [
 
 
 
-// Featured Cards Data (Updated for SmartTransform)
+// Featured Cards Data (Updated for ContentVerse AI)
 const FeaturedCardData = [
   {
     id: "01",
     type: "Video",
-    labelColor: "#4F46E5", // Indigo (SmartTransform Theme)
+    labelColor: "#4F46E5", // Indigo (ContentVerse AI Theme)
     style: { color: "#22405c" },
     title: "AI-Powered Video Processing",
     content: "Leverage advanced AI to transform text into high-quality videos in seconds.",
@@ -135,7 +135,7 @@ const FeaturedCardData = [
   {
     id: "02",
     type: "Audio",
-    labelColor: "#9333EA", // Purple (SmartTransform Theme)
+    labelColor: "#9333EA", // Purple (ContentVerse AI Theme)
     style: { color: "#22405c" },
     title: "Crystal-Clear Audio",
     content: "Enhance and clean up audio files effortlessly with AI-powered noise reduction.",
@@ -143,7 +143,7 @@ const FeaturedCardData = [
   {
     id: "03",
     type: "Video",
-    labelColor: "#2563EB", // Blue (SmartTransform Theme)
+    labelColor: "#2563EB", // Blue (ContentVerse AI Theme)
     style: { color: "#22405c" },
     title: "Seamless Video Editing",
     content: "Cut, merge, and enhance videos without any technical skills required.",
@@ -164,7 +164,7 @@ const FeaturedCardData = [
     title: "HD Video Output",
     content: "Experience 1080p+ quality rendering for all your video conversions.",
   },
- 
+
 ];
 
 export default FeaturedCardData;
@@ -206,74 +206,39 @@ const Rewritertooldata = [
       "Mix, edit, and refine your music tracks using intelligent audio tools. Convert files and enhance sound quality instantly.",
   },
 ];
-  
-
 
 // faqs data video and audio 
 const FAQsData = [
   {
     id: 1,
     questionNo: "Q1:",
-    question: "How can I convert my video into high-quality audio?",
-    answer: "Simply upload your video file to SmartTransform, and our AI-powered converter will extract the audio, delivering a high-quality MP3 or WAV file instantly."
+    question: "How can I create a video from text using ContentVerse AI?",
+    answer: "Simply enter your text, choose a style or visuals, and our AI will instantly generate a high-quality video based on your content."
   },
   {
     id: 2,
     questionNo: "Q2:",
-    question: "Can I turn an audio file into a video with visuals?",
-    answer: "Yes! Upload your audio file, select a background image or dynamic visuals, and our platform will generate a professional video with your audio embedded."
+    question: "Can I generate images just from text?",
+    answer: "Yes! With our text-to-image tool, you can describe anything in words, and ContentVerse AI will create stunning, unique images for you in seconds."
   },
   {
     id: 3,
     questionNo: "Q3:",
-    question: "What file formats does SmartTransform support?",
-    answer: "We support multiple formats, including MP4, MP3, WAV, AVI, FLAC, and more. Convert your files seamlessly to match your needs."
+    question: "Is it possible to convert my text into natural-sounding voice?",
+    answer: "Absolutely! Enter your text in the text-to-voice tool, and our AI will generate a clear, professional-sounding audio file for you."
   },
   {
     id: 4,
     questionNo: "Q4:",
-    question: "Is my data secure while using SmartTransform?",
-    answer: "Absolutely! Your files are processed securely and are automatically deleted after conversion. We prioritize privacy and never store your data."
+    question: "How do I turn my voice recordings into text?",
+    answer: "Just upload your voice file in the voice-to-text tool, and ContentVerse AI will accurately transcribe it into editable text within moments."
   },
   {
     id: 5,
     questionNo: "Q5:",
-    question: "Can I convert multiple files at once?",
-    answer: "Yes! Our batch processing feature allows you to upload and convert multiple video or audio files simultaneously, saving time and effort."
+    question: "Can I extract text from images easily?",
+    answer: "Yes! With the image-to-text feature, simply upload any image, and our AI will instantly detect and extract the text for you."
   },
-  // {
-  //   id: 6,
-  //   questionNo: "Q6:",
-  //   question: "Do I need to install any software to use SmartTransform?",
-  //   answer: "No installation is required. SmartTransform is a fully online tool, allowing you to convert files directly from your browser with no downloads needed."
-  // },
-  // {
-  //   id: 7,
-  //   questionNo: "Q7:",
-  //   question: "Are there any limitations on file size?",
-  //   answer: "We offer generous file size limits for free users, and premium users enjoy even larger upload capacities. Check our pricing page for details."
-  // },
-  // {
-  //   id: 8,
-  //   questionNo: "Q8:",
-  //   question: "Can I enhance or edit my audio before conversion?",
-  //   answer: "Yes! SmartTransform offers basic audio enhancement features such as noise reduction, volume boosting, and trimming before conversion."
-  // },
-  // {
-  //   id: 9,
-  //   questionNo: "Q9:",
-  //   question: "Does SmartTransform support cloud storage integration?",
-  //   answer: "Yes! You can upload files directly from Google Drive, Dropbox, or OneDrive, and download converted files back to your preferred cloud service."
-  // },
-  // {
-  //   id: 10,
-  //   questionNo: "Q10:",
-  //   question: "How long does it take to convert a file?",
-  //   answer: "Conversion time depends on file size and format, but most conversions are completed within seconds using our high-speed processing technology."
-  // }
 ];
 
-
-
-
-export {CardDataVideo, CardDataAudio, CardDataExtraction,CardDataVoiceToText,FeaturedCardData,Rewritertooldata,FAQsData};
+export { CardDataVideo, CardDataAudio, CardDataExtraction, CardDataVoiceToText, FeaturedCardData, Rewritertooldata, FAQsData };

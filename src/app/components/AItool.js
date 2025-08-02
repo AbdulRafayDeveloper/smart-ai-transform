@@ -184,7 +184,7 @@ const TextToVideo = () => {
         },
       });
 
-      const videoPath = response.data.data?.videoPath;
+      const videoPath = response.data.data?.videoUrl;
       if (videoPath) {
         setVideoUrl(videoPath);
         setVideoReady(true);

@@ -13,8 +13,23 @@ const textToVideoUsersSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+    count: {
+      type: Number,
+      default: 1,
+    },
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    videoUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );
 
-export const TextToVideoUsers = mongoose.models.TextToVideoUsers || mongoose.model("TextToVideoUsers", textToVideoUsersSchema);
+export const TextToVideoUsers =
+  mongoose.models.TextToVideoUsers || mongoose.model("TextToVideoUsers", textToVideoUsersSchema);

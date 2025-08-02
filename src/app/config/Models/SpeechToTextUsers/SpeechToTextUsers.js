@@ -13,8 +13,23 @@ const speechToTextUsersSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+    count: {
+      type: Number,
+      default: 1,
+    },
+    voiceUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    text: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );
 
-export const SpeechToTextUsers = mongoose.models.SpeechToTextUsers || mongoose.model("SpeechToTextUsers", speechToTextUsersSchema);
+export const SpeechToTextUsers =
+  mongoose.models.SpeechToTextUsers || mongoose.model("SpeechToTextUsers", speechToTextUsersSchema);

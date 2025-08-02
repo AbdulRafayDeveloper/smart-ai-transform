@@ -135,7 +135,10 @@ function Page() {
                                             <tr>
                                                 <th className="py-3 px-4 text-left">#</th>
                                                 <th className="py-3 px-4 text-left">Email</th>
-                                                <th className="py-3 px-4 text-left">Created At</th>
+                                                <th className="py-3 px-4 text-left">Count</th>
+                                                <th className="py-3 px-4 text-center">Provided Text</th>
+                                                <th className="py-3 px-4 text-left">Date of Entry</th>
+                                                <th className="py-3 px-4 text-left">Output Image</th>
                                                 <th className="py-3 px-4 text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -148,12 +151,21 @@ function Page() {
                                                     >
                                                         <td className="py-3 px-4">{(currentPage - 1) * perPage + index + 1}</td>
                                                         <td className="py-3 px-4 break-all">{user.email}</td>
+                                                        <td className="py-3 px-4 text-center">{user.count}</td>
+                                                        <td className="py-3 px-4 break-all">{user.text}</td>
                                                         <td className="py-3 px-4">
                                                             {new Date(user.createdAt).toLocaleDateString("en-US", {
                                                                 year: "numeric",
                                                                 month: "short",
                                                                 day: "numeric",
                                                             })}
+                                                        </td>
+                                                        <td className="py-3 px-4">
+                                                            <img
+                                                                src={user.imageUrl}
+                                                                alt="Generated"
+                                                                className="w-20 h-20 rounded-md object-cover shadow"
+                                                            />
                                                         </td>
                                                         <td className="py-3 px-4 text-center">
                                                             <button
@@ -167,7 +179,7 @@ function Page() {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan="4" className="text-center py-6 text-gray-500">
+                                                    <td colSpan="7" className="text-center py-6 text-gray-500">
                                                         No records found
                                                     </td>
                                                 </tr>

@@ -135,7 +135,10 @@ function Page() {
                                             <tr>
                                                 <th className="py-3 px-4 text-left">#</th>
                                                 <th className="py-3 px-4 text-left">Email</th>
-                                                <th className="py-3 px-4 text-left">Created At</th>
+                                                <th className="py-3 px-4 text-left">Count</th>
+                                                <th className="py-3 px-4 text-center">Prvided Text</th>
+                                                <th className="py-3 px-4 text-center">Date of Entry</th>
+                                                <th className="py-3 px-4 text-center">Output Voice</th>
                                                 <th className="py-3 px-4 text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -147,7 +150,13 @@ function Page() {
                                                         className="border-b hover:bg-gray-50 transition"
                                                     >
                                                         <td className="py-3 px-4">{(currentPage - 1) * perPage + index + 1}</td>
+
                                                         <td className="py-3 px-4 break-all">{user.email}</td>
+
+                                                        <td className="py-3 px-4 text-center">{user.count}</td>
+
+                                                        <td className="py-3 px-4 break-all">{user.text}</td>
+
                                                         <td className="py-3 px-4">
                                                             {new Date(user.createdAt).toLocaleDateString("en-US", {
                                                                 year: "numeric",
@@ -155,6 +164,14 @@ function Page() {
                                                                 day: "numeric",
                                                             })}
                                                         </td>
+
+                                                        <td className="py-3 px-4">
+                                                            <audio controls>
+                                                                <source src={user.voiceUrl} type="audio/mpeg" />
+                                                                Your browser does not support the audio element.
+                                                            </audio>
+                                                        </td>
+
                                                         <td className="py-3 px-4 text-center">
                                                             <button
                                                                 onClick={() => openDeleteModal(user._id)}
@@ -167,7 +184,7 @@ function Page() {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan="4" className="text-center py-6 text-gray-500">
+                                                    <td colSpan="7" className="text-center py-6 text-gray-500">
                                                         No records found
                                                     </td>
                                                 </tr>
