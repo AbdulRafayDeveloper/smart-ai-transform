@@ -117,27 +117,136 @@
 
 // with open ai
 
+// import { NextResponse } from "next/server";
+// import fs from "fs";
+// import path from "path";
+// import { v4 as uuidv4 } from "uuid";
+// import {
+//   successResponse,
+//   badRequestResponse,
+//   serverErrorResponse,
+//   notFoundResponse,
+// } from "../../helper/apiResponseHelpers";
+
+// import { Users } from "@/app/config/Models/Users/users";
+// import { TextToSpeechUsers } from "@/app/config/Models/TextToSpeechUsers/TextToSpeechUsers";
+// import serverSideValidation from "@/app/helper/serverSideValidation";
+// import OpenAI from "openai";
+
+// const openai = new OpenAI({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+
+// // Text validation helper
+// function validateText(data) {
+//   if (!data?.text || typeof data.text !== "string" || data.text.trim() === "") {
+//     return { error: "Text field is required and must be a non-empty string." };
+//   }
+//   return { error: null };
+// }
+
+// export async function POST(req) {
+//   try {
+//     const token = serverSideValidation.extractAuthToken(req);
+
+//     if (typeof token !== "string") {
+//       return notFoundResponse("Token not found or invalid.", null);
+//     }
+
+//     console.log("Token:", token);
+
+//     const user = await serverSideValidation.validateUserByToken(token);
+
+//     console.log("User:", user);
+
+//     if (user && user.status) {
+//       return user;
+//     }
+
+//     if (!user || !user._id) {
+//       return notFoundResponse("User not found or invalid token.", null);
+//     }
+
+//     const id = user._id;
+
+//     const userData = await Users.findById(id);
+
+//     console.log("User Data:", userData);
+
+//     if (!userData) {
+//       return notFoundResponse("User not found.", null);
+//     }
+
+//     const { text } = await req.json();
+
+//     const { error } = validateText({ text });
+//     if (error) {
+//       return badRequestResponse(error, null);
+//     }
+
+//     const uploadDir = path.join(process.cwd(), "public", "uploads", "text-to-speech");
+
+//     // Create directory if not exists
+//     if (!fs.existsSync(uploadDir)) {
+//       fs.mkdirSync(uploadDir, { recursive: true });
+//     }
+
+//     const filename = `${uuidv4()}.mp3`;
+//     const filepath = path.join(uploadDir, filename);
+//     const relativePath = `/uploads/text-to-speech/${filename}`;
+
+//     // Call OpenAI TTS
+//     const audioRes = await openai.audio.speech.create({
+//       model: "tts-1", // Use tts-1 for low cost and good quality (or tts-1-hd for higher quality)
+//       voice: "alloy", // Voices: alloy, onyx, echo, etc. (currently alloy is default and widely supported)
+//       input: text,
+//       format: "mp3",
+//     });
+
+//     const buffer = Buffer.from(await audioRes.arrayBuffer());
+
+//     fs.writeFileSync(filepath, buffer);
+
+//     console.log("Audio file saved at:", filepath);
+
+//     // Save user log
+//     const newLog = new TextToSpeechUsers({
+//       userId: userData._id,
+//       email: userData.email,
+//     });
+
+//     const savedLog = await newLog.save();
+
+//     if (!savedLog) {
+//       return serverErrorResponse("Failed to save user activity log.");
+//     }
+
+//     return successResponse("Voice generated successfully", {
+//       voicePath: relativePath,
+//     });
+//   } catch (error) {
+//     console.error("Error generating voice:", error);
+//     return serverErrorResponse("Error generating voice: " + error.message, null);
+//   }
+// }
+
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
 import {
   successResponse,
   badRequestResponse,
   serverErrorResponse,
   notFoundResponse,
 } from "../../helper/apiResponseHelpers";
-
 import { Users } from "@/app/config/Models/Users/users";
 import { TextToSpeechUsers } from "@/app/config/Models/TextToSpeechUsers/TextToSpeechUsers";
 import serverSideValidation from "@/app/helper/serverSideValidation";
 import OpenAI from "openai";
+import { uploadFileToS3 } from "@/app/helper/s3Helpers/s3Helper.js";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Text validation helper
 function validateText(data) {
   if (!data?.text || typeof data.text !== "string" || data.text.trim() === "") {
     return { error: "Text field is required and must be a non-empty string." };
@@ -148,17 +257,11 @@ function validateText(data) {
 export async function POST(req) {
   try {
     const token = serverSideValidation.extractAuthToken(req);
-
     if (typeof token !== "string") {
       return notFoundResponse("Token not found or invalid.", null);
     }
 
-    console.log("Token:", token);
-
     const user = await serverSideValidation.validateUserByToken(token);
-
-    console.log("User:", user);
-
     if (user && user.status) {
       return user;
     }
@@ -167,70 +270,58 @@ export async function POST(req) {
       return notFoundResponse("User not found or invalid token.", null);
     }
 
-    const id = user._id;
-
-    const userData = await Users.findById(id);
-
-    console.log("User Data:", userData);
-
+    const userData = await Users.findById(user._id);
     if (!userData) {
       return notFoundResponse("User not found.", null);
     }
 
     const { text } = await req.json();
-
     const { error } = validateText({ text });
     if (error) {
       return badRequestResponse(error, null);
     }
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "text-to-speech");
-
-    // Create directory if not exists
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    const filename = `${uuidv4()}.mp3`;
-    const filepath = path.join(uploadDir, filename);
-    const relativePath = `/uploads/text-to-speech/${filename}`;
-
     // Call OpenAI TTS
     const audioRes = await openai.audio.speech.create({
-      model: "tts-1", // Use tts-1 for low cost and good quality (or tts-1-hd for higher quality)
-      voice: "alloy", // Voices: alloy, onyx, echo, etc. (currently alloy is default and widely supported)
+      model: "tts-1",
+      voice: "alloy",
       input: text,
       format: "mp3",
     });
 
     const buffer = Buffer.from(await audioRes.arrayBuffer());
 
-    fs.writeFileSync(filepath, buffer);
+    // Upload to S3 using helper
+    const s3FileUrl = await uploadFileToS3(buffer, "text-to-voice", "mp3", "audio/mpeg");
 
-    console.log("Audio file saved at:", filepath);
+    // Find last record for this user (if exists)
+    const lastRecord = await TextToSpeechUsers.findOne({ userId: userData._id })
+      .sort({ createdAt: -1 });
 
-    // Save user log
+    let newCount = 1;
+    if (lastRecord && lastRecord.count) {
+      newCount = lastRecord.count + 1;
+    }
+
+    // Create new record
     const newLog = new TextToSpeechUsers({
       userId: userData._id,
       email: userData.email,
+      count: newCount,
+      text: text,
+      voiceUrl: s3FileUrl,
     });
 
-    const savedLog = await newLog.save();
-
-    if (!savedLog) {
-      return serverErrorResponse("Failed to save user activity log.");
-    }
+    await newLog.save();
 
     return successResponse("Voice generated successfully", {
-      voicePath: relativePath,
+      voicePath: s3FileUrl,
     });
   } catch (error) {
     console.error("Error generating voice:", error);
     return serverErrorResponse("Error generating voice: " + error.message, null);
   }
 }
-
-
 
 export async function GET(req) {
   try {

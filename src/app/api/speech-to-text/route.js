@@ -138,9 +138,6 @@
 
 // with open ai
 
-import fs from "fs";
-import path from "path";
-import { v4 as uuidv4 } from "uuid";
 import {
     successResponse,
     badRequestResponse,
@@ -151,99 +148,75 @@ import { Users } from "@/app/config/Models/Users/users";
 import { SpeechToTextUsers } from "@/app/config/Models/SpeechToTextUsers/SpeechToTextUsers";
 import serverSideValidation from "@/app/helper/serverSideValidation";
 import OpenAI from "openai";
+import streamifier from "streamifier";
+import { uploadFileToS3 } from "@/app/helper/s3Helpers/s3Helper.js";
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Node runtime for file ops
-export const runtime = "nodejs";
-
-// Limit body size (20 MB)
-export const requestBody = {
-    sizeLimit: 20 * 1024 * 1024,
-};
-
 export async function POST(request) {
     try {
         const token = serverSideValidation.extractAuthToken(request);
-
         if (typeof token !== "string") {
             return notFoundResponse("Token not found or invalid.", null);
         }
 
-        console.log("Token:", token);
-
         const user = await serverSideValidation.validateUserByToken(token);
-
-        console.log("User:", user);
-
-        if (user && user.status) {
-            return user;
-        }
-
+        if (user && user.status) return user;
         if (!user || !user._id) {
             return notFoundResponse("User not found or invalid token.", null);
         }
 
-        const id = user._id;
-
-        const userData = await Users.findById(id);
-
-        console.log("User Data:", userData);
-
+        const userData = await Users.findById(user._id);
         if (!userData) {
             return notFoundResponse("User not found.", null);
         }
 
-        // Parse multipart form data
         const formData = await request.formData();
         const file = formData.get("audio") || formData.get("file");
-
         if (!(file instanceof File)) {
             return badRequestResponse("Audio file is required.", null);
         }
 
-        // Convert to Buffer
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        // Save to temp file
-        const uploadDir = path.join(process.cwd(), "temp");
-        if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-
-        const filename = `${uuidv4()}-${file.name}`;
-        const filepath = path.join(uploadDir, filename);
-        fs.writeFileSync(filepath, buffer);
-        console.log("Saved audio temp file at:", filepath);
+        // Convert buffer to stream for OpenAI
+        const stream = streamifier.createReadStream(buffer);
+        stream.path = file.name; // OpenAI API needs path property
 
         // Send to OpenAI Whisper
         const transcription = await openai.audio.transcriptions.create({
-            file: fs.createReadStream(filepath),
+            file: stream,
             model: "whisper-1",
-            // You can also set language: "en" or leave auto
         });
-
-        console.log("Transcription text:", transcription.text);
-
-        // Delete temp file
-        fs.unlinkSync(filepath);
 
         if (!transcription.text) {
             return badRequestResponse("No transcription text returned.", null);
         }
 
-        // Save user log
+        // Upload audio to S3 (folder: voice-to-text)
+        const s3Url = await uploadFileToS3(buffer, "voice-to-text", "mp3", "audio/mpeg");
+
+        // Find last record to get count
+        const lastRecord = await SpeechToTextUsers.findOne({ userId: userData._id }).sort({ createdAt: -1 });
+
+        let newCount = 1;
+        if (lastRecord && lastRecord.count) {
+            newCount = lastRecord.count + 1;
+        }
+
+        // Save new record
         const newLog = new SpeechToTextUsers({
             userId: userData._id,
             email: userData.email,
+            voiceUrl: s3Url,
+            text: transcription.text,
+            count: newCount,
         });
 
-        const savedLog = await newLog.save();
-
-        if (!savedLog) {
-            return serverErrorResponse("Failed to save user activity log.");
-        }
+        await newLog.save();
 
         return successResponse("Speech-to-Text successful", {
             transcription: transcription.text,
@@ -253,8 +226,6 @@ export async function POST(request) {
         return serverErrorResponse("Error transcribing audio: " + (err.message || String(err)), null);
     }
 }
-
-
 
 export async function GET(req) {
     try {

@@ -18,8 +18,12 @@ function Header() {
             text: "Your account has been logged out.",
             confirmButtonText: "OK",
         }).then(() => {
-            Cookies.remove('token');
-            router.push("../../auth/login");
+            Cookies.remove('access_token');
+            Cookies.remove('user_id');
+            Cookies.remove('user_role');
+            Cookies.remove('full_name');
+            // router.push("../../auth/login");
+            window.location.href = '/auth/login';
         });
     }
 
@@ -32,7 +36,7 @@ function Header() {
                     {/* <img src="/img/logo.png" className="w-1/4 h-10 sm:h-10" alt="Logo" /> */}
                     <Image src="/img/logo.png" alt="Logo" width={50} height={50} />
                     <p className="pl-2 font-semibold text-background md:text-3xl text-2xl custom-logo-size">
-                        SmartTransform
+                        ContentVerse AI
                     </p>
                 </Link>
 

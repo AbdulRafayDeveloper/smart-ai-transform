@@ -1,5 +1,5 @@
 {
-  "name": "Smart Transform",
+  "name": "ContentVerse AI",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@api.video/nodejs-client": "^2.6.8",
+    "@api.video/nodejs-sdk": "^1.10.4",
+    "@aws-sdk/client-s3": "^3.844.0",
+    "@aws-sdk/s3-request-presigner": "^3.844.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -29,6 +33,7 @@
     "gtts": "^0.2.1",
     "jimp": "^1.6.0",
     "joi": "^17.13.3",
+    "jose": "^6.0.11",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.508.0",
@@ -43,9 +48,12 @@
     "react-dom": "^18",
     "react-paginate": "^8.3.0",
     "react-toastify": "^11.0.5",
+    "shotstack-sdk": "^0.2.9",
     "speech-to-text": "^2.9.1",
+    "streamifier": "^0.1.1",
     "sweetalert2": "^11.15.0",
     "tesseract.js": "^6.0.1",
+    "uuid": "^11.1.0",
     "vercel": "^32.3.0"
   },
   "devDependencies": {

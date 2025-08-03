@@ -13,8 +13,8 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "SmartTransform",
-  description: "SmartTransform - Text, Image, and Video Processing Platform",
+  title: "ContentVerse AI",
+  description: "ContentVerse AI - Text, Image, and Video Processing Platform",
 };
 
 export default function RootLayout({ children }) {

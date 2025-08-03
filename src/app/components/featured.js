@@ -7,10 +7,10 @@ const Featured = () => {
         {/* Heading Section */}
         <div className="text-center">
           <h1 className="text-3xl sm:text-4xl font-extrabold">
-            SmartTransform Features
+            ContentVerse AI Features
           </h1>
           <p className="text-lg sm:text-xl mt-4 max-w-2xl mx-auto">
-            Explore the powerful AI-driven tools that make SmartTransform the best platform for voice, video, and text transformation.
+            Explore the powerful AI-driven tools that make ContentVerse AI the best platform for voice, video, and text transformation.
           </p>
         </div>
 

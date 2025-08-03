@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FaTrash } from "react-icons/fa";
 import Loading from "../../components/Loading";
 import LinkingWithSidebar from "../../components/LinkingWithSidebar";
@@ -130,7 +130,7 @@ function Page() {
                         ) : (
                             <>
                                 <div className="overflow-x-auto rounded-lg shadow">
-                                    <table className="min-w-full text-sm text-gray-700 bg-white rounded-lg overflow-hidden">
+                                    {/* <table className="min-w-full text-sm text-gray-700 bg-white rounded-lg overflow-hidden">
                                         <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
                                             <tr>
                                                 <th className="py-3 px-4 text-left">#</th>
@@ -173,7 +173,66 @@ function Page() {
                                                 </tr>
                                             )}
                                         </tbody>
+                                    </table> */}
+                                    <table className="min-w-full text-sm text-gray-700 bg-white rounded-lg overflow-hidden">
+                                        <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+                                            <tr>
+                                                <th className="py-3 px-4 text-left">#</th>
+                                                <th className="py-3 px-4 text-left">Email</th>
+                                                <th className="py-3 px-4 text-center">Count</th>
+                                                <th className="py-3 px-4 text-left">Text</th>
+                                                <th className="py-3 px-4 text-left">Created At</th>
+                                                <th className="py-3 px-4 text-center">Video</th>
+                                                <th className="py-3 px-4 text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data.length > 0 ? (
+                                                data.map((user, index) => (
+                                                    <tr
+                                                        key={user._id}
+                                                        className="border-b hover:bg-gray-50 transition"
+                                                    >
+                                                        <td className="py-3 px-4">{(currentPage - 1) * perPage + index + 1}</td>
+                                                        <td className="py-3 px-4 break-all">{user.email}</td>
+                                                        <td className="py-3 px-4 text-center">{user.count}</td>
+                                                        <td className="py-3 px-4 break-all">{user.text}</td>
+                                                        <td className="py-3 px-4">
+                                                            {new Date(user.createdAt).toLocaleDateString("en-US", {
+                                                                year: "numeric",
+                                                                month: "short",
+                                                                day: "numeric",
+                                                            })}
+                                                        </td>
+                                                        <td className="py-3 px-4 text-center">
+                                                            <video
+                                                                src={user.videoUrl}
+                                                                controls
+                                                                className="w-32 h-20 rounded shadow"
+                                                            >
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        </td>
+                                                        <td className="py-3 px-4 text-center">
+                                                            <button
+                                                                onClick={() => openDeleteModal(user._id)}
+                                                                className="text-red-600 hover:text-red-800 transition"
+                                                            >
+                                                                <FaTrash />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="7" className="text-center py-6 text-gray-500">
+                                                        No records found
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
                                     </table>
+
                                 </div>
 
                                 {totalPages > 1 && (

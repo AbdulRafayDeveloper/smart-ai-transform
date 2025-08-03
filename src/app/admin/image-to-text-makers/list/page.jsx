@@ -20,6 +20,13 @@ function Page() {
     const token = Cookies.get("access_token");
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
+    const [expandedRows, setExpandedRows] = useState([]);
+
+    const toggleExpand = (id) => {
+        setExpandedRows((prev) =>
+            prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
+        );
+    };
 
     const fetchData = useCallback(async (query = "", page = 1) => {
         try {
@@ -130,7 +137,7 @@ function Page() {
                         ) : (
                             <>
                                 <div className="overflow-x-auto rounded-lg shadow">
-                                    <table className="min-w-full text-sm text-gray-700 bg-white rounded-lg overflow-hidden">
+                                    {/* <table className="min-w-full text-sm text-gray-700 bg-white rounded-lg overflow-hidden">
                                         <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
                                             <tr>
                                                 <th className="py-3 px-4 text-left">#</th>
@@ -168,6 +175,84 @@ function Page() {
                                             ) : (
                                                 <tr>
                                                     <td colSpan="4" className="text-center py-6 text-gray-500">
+                                                        No records found
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table> */}
+                                    <table className="min-w-full text-sm text-gray-700 bg-white rounded-lg overflow-hidden">
+                                        <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+                                            <tr>
+                                                <th className="py-3 px-4 text-left">#</th>
+                                                <th className="py-3 px-4 text-left">Email</th>
+                                                <th className="py-3 px-4 text-center">Count</th>
+                                                <th className="py-3 px-4 text-center">Image</th>
+                                                <th className="py-3 px-4 text-left max-w-xs">Description</th>
+                                                <th className="py-3 px-4 text-left">Created At</th>
+                                                <th className="py-3 px-4 text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {data.length > 0 ? (
+                                                data.map((user, index) => (
+                                                    <tr key={user._id} className="border-b hover:bg-gray-50 transition">
+                                                        <td className="py-3 px-4">{(currentPage - 1) * perPage + index + 1}</td>
+                                                        <td className="py-3 px-4 break-all">{user.email}</td>
+                                                        <td className="py-3 px-4 text-center">{user.count}</td>
+                                                        <td className="py-3 px-4 text-center">
+                                                            <img
+                                                                src={user.imageUrl}
+                                                                alt="Uploaded"
+                                                                className="w-32 h-32 object-cover rounded shadow"
+                                                            />
+                                                        </td>
+                                                        <td className="py-3 px-4 break-words max-w-xs">
+                                                            {expandedRows.includes(user._id) ? (
+                                                                <>
+                                                                    {user.description}{" "}
+                                                                    <button
+                                                                        onClick={() => toggleExpand(user._id)}
+                                                                        className="text-blue-600 hover:underline text-xs"
+                                                                    >
+                                                                        Read less
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    {user.description.slice(0, 100)}
+                                                                    {user.description.length > 100 && "... "}
+                                                                    {user.description.length > 100 && (
+                                                                        <button
+                                                                            onClick={() => toggleExpand(user._id)}
+                                                                            className="text-blue-600 hover:underline text-xs"
+                                                                        >
+                                                                            Read more
+                                                                        </button>
+                                                                    )}
+                                                                </>
+                                                            )}
+                                                        </td>
+                                                        <td className="py-3 px-4">
+                                                            {new Date(user.createdAt).toLocaleDateString("en-US", {
+                                                                year: "numeric",
+                                                                month: "short",
+                                                                day: "numeric",
+                                                            })}
+                                                        </td>
+                                                        <td className="py-3 px-4 text-center">
+                                                            <button
+                                                                onClick={() => openDeleteModal(user._id)}
+                                                                className="text-red-600 hover:text-red-800 transition"
+                                                            >
+                                                                <FaTrash />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="7" className="text-center py-6 text-gray-500">
                                                         No records found
                                                     </td>
                                                 </tr>

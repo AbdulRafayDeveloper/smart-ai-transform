@@ -13,8 +13,23 @@ const imageToTextUsersSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+    count: {
+      type: Number,
+      default: 1,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 );
 
-export const ImageToTextUsers = mongoose.models.ImageToTextUsers || mongoose.model("ImageToTextUsers", imageToTextUsersSchema);
+export const ImageToTextUsers =
+  mongoose.models.ImageToTextUsers || mongoose.model("ImageToTextUsers", imageToTextUsersSchema);

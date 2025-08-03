@@ -6,8 +6,11 @@ import {
   CardDataVoiceToText,
 } from "../dataset/data";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Card = () => {
+  const router = useRouter();
+
   return (
     <>
       {/* Section 2 - SmartVidz: Text to Video */}
@@ -21,6 +24,7 @@ const Card = () => {
               <div
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 TexttoVideo"
+                onClick={() => router.push('/textvideo')}
               >
                 {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto text-white" /> */}
                 <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
@@ -51,6 +55,7 @@ const Card = () => {
               <div
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 TexttoSpeech"
+                onClick={() => router.push('/textspeak')}
               >
                 {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" /> */}
                 <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
@@ -81,6 +86,7 @@ const Card = () => {
               <div
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 ImagetoText"
+                onClick={() => router.push('/imgtext')}
               >
                 {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" /> */}
                 <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />
@@ -111,6 +117,7 @@ const Card = () => {
               <div
                 key={idx}
                 className="max-w-sm p-6 bg-foreground border border-gray-200 rounded-lg shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300 VoicetoText"
+                onClick={() => router.push('/voicetext')}
               >
                 {/* <img src={el.image} alt="cards" className="w-16 h-16 mx-auto" /> */}
                 <Image src={el.image} alt="cards" width={100} height={100} className="w-16 h-16 mx-auto" />

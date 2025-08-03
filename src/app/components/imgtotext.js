@@ -59,8 +59,8 @@ const TextExtraction = () => {
         toast.success('Text extracted successfully!'); // ✅ Correct place to call it
       }
     } catch (error) {
-      console.error("Error extracting text:", error);
-      setExtractedText('Failed to extract text. Try again.');
+      console.error("Error describing image:", error);
+      setExtractedText('Failed to describe the image. Try again.');
     }
     setLoading(false);
   };
@@ -118,21 +118,15 @@ const TextExtraction = () => {
             className="mt-4 w-full bg-white hover:bg-foreground text-foreground hover:text-background font-bold py-3 border-2 rounded-lg transition-all duration-300"
             disabled={loading}
           >
-            {loading ? 'Extracting Text...' : 'Extract Text 📝'}
+            {loading ? 'Describing Text...' : 'Describe Image'}
           </button>
         </div>
       )}
 
-      {/* {extractedText && (
-        <div className="mt-6 w-full max-w-lg bg-white p-6 rounded-lg shadow-md border border-gray-300">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Extracted Text:</h3>
-          <p className="text-gray-800 whitespace-pre-wrap">{extractedText}</p>
-        </div>
-      )} */}
       {extractedText && (
         <div className="mt-6 w-full max-w-lg bg-white p-6 rounded-lg shadow-md border border-gray-300 relative">
           <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center justify-between">
-            Extracted Text
+            Described Text 📝:
             <ContentCopy
               className="cursor-pointer text-gray-600 hover:text-gray-900 ml-2"
               onClick={handleCopy}
