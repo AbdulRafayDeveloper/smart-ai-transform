@@ -11,7 +11,7 @@ const AboutUs = () => {
         {/* Header Section */}
         <div className="text-center mt-20 w-3/5 ">
           <h1 className="text-4xl font-bold">About Us</h1>
-          <p className="text-foreground text-lg mb-9 font-medium"> <strong>ContentVerse AI</strong> offers a powerful suite of AI tools designed to simplify content creation. With features like converting text from images, transforming text into speech, and generating images from text, we make it easy to bring your ideas to life. Whether you&apos;re looking to digitize content, enhance accessibility, or create custom visuals, our platform provides intuitive, high-quality solutions for all your creative needs.</p>
+          <p className="text-foreground text-lg mb-9 font-medium"> <strong>Smart Transform AI</strong> offers a powerful suite of AI tools designed to simplify content creation. With features like converting text from images, transforming text into speech, and generating images from text, we make it easy to bring your ideas to life. Whether you&apos;re looking to digitize content, enhance accessibility, or create custom visuals, our platform provides intuitive, high-quality solutions for all your creative needs.</p>
           <h1 className="mt-2 text-2xl mb-3 font-bold">Discover who we are and what we do</h1>
         </div>
 

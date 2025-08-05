@@ -13,11 +13,11 @@ const Homepagesection = () => {
           <div className="lg:w-1/2 text-center lg:text-left px-6 md:px-12">
             <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4 animate-text-reveal">
               <span className="line line-1">AI-Powered</span>
-              <span className="line line-2">ContentVerse AI</span>
+              <span className="line line-2">Smart Transform</span>
               <span className="line line-3">Tools</span>
             </h1>
             <p className="text-lg md:text-xl leading-relaxed text-foreground mb-9 animate-text-reveal-paragraph">
-              Unlock the power of AI with ContentVerse AI. Convert text into
+              Unlock the power of AI with Smart Transform. Convert text into
               speech, generate stunning AI-powered videos, and extract text from
               images with precision. Our advanced tools offer seamless, fast, and
               accurate transformations for content creators, businesses, and

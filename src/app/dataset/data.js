@@ -122,12 +122,12 @@ const CardDataVoiceToText = [
 
 
 
-// Featured Cards Data (Updated for ContentVerse AI)
+// Featured Cards Data (Updated for Smart Transform AI)
 const FeaturedCardData = [
   {
     id: "01",
     type: "Video",
-    labelColor: "#4F46E5", // Indigo (ContentVerse AI Theme)
+    labelColor: "#4F46E5", // Indigo (Smart Transform AI Theme)
     style: { color: "#22405c" },
     title: "AI-Powered Video Processing",
     content: "Leverage advanced AI to transform text into high-quality videos in seconds.",
@@ -135,7 +135,7 @@ const FeaturedCardData = [
   {
     id: "02",
     type: "Audio",
-    labelColor: "#9333EA", // Purple (ContentVerse AI Theme)
+    labelColor: "#9333EA", // Purple (Smart Transform AI Theme)
     style: { color: "#22405c" },
     title: "Crystal-Clear Audio",
     content: "Enhance and clean up audio files effortlessly with AI-powered noise reduction.",
@@ -143,7 +143,7 @@ const FeaturedCardData = [
   {
     id: "03",
     type: "Video",
-    labelColor: "#2563EB", // Blue (ContentVerse AI Theme)
+    labelColor: "#2563EB", // Blue (Smart Transform AI Theme)
     style: { color: "#22405c" },
     title: "Seamless Video Editing",
     content: "Cut, merge, and enhance videos without any technical skills required.",
@@ -212,14 +212,14 @@ const FAQsData = [
   {
     id: 1,
     questionNo: "Q1:",
-    question: "How can I create a video from text using ContentVerse AI?",
+    question: "How can I create a video from text using Smart Transform?",
     answer: "Simply enter your text, choose a style or visuals, and our AI will instantly generate a high-quality video based on your content."
   },
   {
     id: 2,
     questionNo: "Q2:",
     question: "Can I generate images just from text?",
-    answer: "Yes! With our text-to-image tool, you can describe anything in words, and ContentVerse AI will create stunning, unique images for you in seconds."
+    answer: "Yes! With our text-to-image tool, you can describe anything in words, and Smart Transform will create stunning, unique images for you in seconds."
   },
   {
     id: 3,
@@ -231,7 +231,7 @@ const FAQsData = [
     id: 4,
     questionNo: "Q4:",
     question: "How do I turn my voice recordings into text?",
-    answer: "Just upload your voice file in the voice-to-text tool, and ContentVerse AI will accurately transcribe it into editable text within moments."
+    answer: "Just upload your voice file in the voice-to-text tool, and Smart Transform will accurately transcribe it into editable text within moments."
   },
   {
     id: 5,

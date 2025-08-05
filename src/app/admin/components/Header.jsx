@@ -36,7 +36,7 @@ function Header() {
                     {/* <img src="/img/logo.png" className="w-1/4 h-10 sm:h-10" alt="Logo" /> */}
                     <Image src="/img/logo.png" alt="Logo" width={50} height={50} />
                     <p className="pl-2 font-semibold text-background md:text-3xl text-2xl custom-logo-size">
-                        ContentVerse AI
+                        Smart Transform AI
                     </p>
                 </Link>
 
