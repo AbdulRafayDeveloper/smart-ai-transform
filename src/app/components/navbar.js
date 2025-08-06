@@ -56,7 +56,7 @@ const Navbar = (props) => {
               />
 
               <p className="pl-2 font-semibold text-white md:text-3xl text-2xl custom-logo-size">
-                ContentVerse AI
+                Smart Transform
               </p>
             </Link>
           </div>
