@@ -1,0 +1,8 @@
+.selected {
+    caret-color: #27a567; 
+    cursor: text;
+}
+.selected::selection{
+    color: white;
+    background-color: #27a567;
+}
